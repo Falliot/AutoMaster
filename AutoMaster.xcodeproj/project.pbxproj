@@ -7,18 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A1ABD8027380A0D00554C4A /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = 3A1ABD7F27380A0D00554C4A /* SwiftUIX */; settings = {ATTRIBUTES = (Weak, ); }; };
+		3A1ABD892738132900554C4A /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1ABD882738132900554C4A /* R.generated.swift */; };
+		3A1ABD8D273814BA00554C4A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1ABD8C273814BA00554C4A /* Constants.swift */; };
 		3A9B7ACB2737F49200968A8F /* AutoMasterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9B7ACA2737F49200968A8F /* AutoMasterApp.swift */; };
 		3A9B7ACD2737F49200968A8F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9B7ACC2737F49200968A8F /* ContentView.swift */; };
 		3A9B7ACF2737F49400968A8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A9B7ACE2737F49400968A8F /* Assets.xcassets */; };
 		3A9B7AD22737F49400968A8F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A9B7AD12737F49400968A8F /* Preview Assets.xcassets */; };
+		F43A7F171C886CCCE757A184 /* Pods_AutoMaster.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3268ED0E51189BF0150DD3B /* Pods_AutoMaster.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3A1ABD832738112B00554C4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3A1ABD882738132900554C4A /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
+		3A1ABD8C273814BA00554C4A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3A9B7AC72737F49200968A8F /* AutoMaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AutoMaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A9B7ACA2737F49200968A8F /* AutoMasterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoMasterApp.swift; sourceTree = "<group>"; };
 		3A9B7ACC2737F49200968A8F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		3A9B7ACE2737F49400968A8F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3A9B7AD12737F49400968A8F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		4F105F4ECFAF4AE8226EB54A /* Pods-AutoMaster.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutoMaster.release.xcconfig"; path = "Target Support Files/Pods-AutoMaster/Pods-AutoMaster.release.xcconfig"; sourceTree = "<group>"; };
+		E3268ED0E51189BF0150DD3B /* Pods_AutoMaster.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AutoMaster.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF41DB229C4CC800D2FFCD9C /* Pods-AutoMaster.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutoMaster.debug.xcconfig"; path = "Target Support Files/Pods-AutoMaster/Pods-AutoMaster.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -26,17 +36,72 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A1ABD8027380A0D00554C4A /* SwiftUIX in Frameworks */,
+				F43A7F171C886CCCE757A184 /* Pods_AutoMaster.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3A1ABD87273812E800554C4A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3A1ABD832738112B00554C4A /* Info.plist */,
+				3A1ABD882738132900554C4A /* R.generated.swift */,
+				3A9B7ACE2737F49400968A8F /* Assets.xcassets */,
+				3A9B7AD02737F49400968A8F /* Preview Content */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		3A1ABD8A2738149900554C4A /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				3A1ABD8E273814C300554C4A /* Extensions */,
+				3A1ABD8B273814AA00554C4A /* Constants */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		3A1ABD8B273814AA00554C4A /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				3A1ABD8C273814BA00554C4A /* Constants.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		3A1ABD8E273814C300554C4A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		3A1ABD8F273814F600554C4A /* AppMain */ = {
+			isa = PBXGroup;
+			children = (
+				3A9B7ACA2737F49200968A8F /* AutoMasterApp.swift */,
+			);
+			path = AppMain;
+			sourceTree = "<group>";
+		};
+		3A1ABD90273814FF00554C4A /* AppSections */ = {
+			isa = PBXGroup;
+			children = (
+				3A9B7ACC2737F49200968A8F /* ContentView.swift */,
+			);
+			path = AppSections;
+			sourceTree = "<group>";
+		};
 		3A9B7ABE2737F49100968A8F = {
 			isa = PBXGroup;
 			children = (
 				3A9B7AC92737F49200968A8F /* AutoMaster */,
 				3A9B7AC82737F49200968A8F /* Products */,
+				EB2FD933D1738342A3136B77 /* Pods */,
+				86021E2D566ACC6FA37B8433 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -51,10 +116,10 @@
 		3A9B7AC92737F49200968A8F /* AutoMaster */ = {
 			isa = PBXGroup;
 			children = (
-				3A9B7ACA2737F49200968A8F /* AutoMasterApp.swift */,
-				3A9B7ACC2737F49200968A8F /* ContentView.swift */,
-				3A9B7ACE2737F49400968A8F /* Assets.xcassets */,
-				3A9B7AD02737F49400968A8F /* Preview Content */,
+				3A1ABD8A2738149900554C4A /* Utilities */,
+				3A1ABD87273812E800554C4A /* Resources */,
+				3A1ABD8F273814F600554C4A /* AppMain */,
+				3A1ABD90273814FF00554C4A /* AppSections */,
 			);
 			path = AutoMaster;
 			sourceTree = "<group>";
@@ -67,6 +132,23 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		86021E2D566ACC6FA37B8433 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E3268ED0E51189BF0150DD3B /* Pods_AutoMaster.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EB2FD933D1738342A3136B77 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FF41DB229C4CC800D2FFCD9C /* Pods-AutoMaster.debug.xcconfig */,
+				4F105F4ECFAF4AE8226EB54A /* Pods-AutoMaster.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -74,15 +156,22 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3A9B7AD52737F49400968A8F /* Build configuration list for PBXNativeTarget "AutoMaster" */;
 			buildPhases = (
+				864EDB2CD8862E06CE5603F8 /* [CP] Check Pods Manifest.lock */,
+				3A1ABD8127380BF400554C4A /* ShellScript */,
+				3A1ABD842738116A00554C4A /* ShellScript */,
 				3A9B7AC32737F49200968A8F /* Sources */,
 				3A9B7AC42737F49200968A8F /* Frameworks */,
 				3A9B7AC52737F49200968A8F /* Resources */,
+				0877CA0137741199F9CF69F7 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = AutoMaster;
+			packageProductDependencies = (
+				3A1ABD7F27380A0D00554C4A /* SwiftUIX */,
+			);
 			productName = AutoMaster;
 			productReference = 3A9B7AC72737F49200968A8F /* AutoMaster.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +200,9 @@
 				Base,
 			);
 			mainGroup = 3A9B7ABE2737F49100968A8F;
+			packageReferences = (
+				3A1ABD7E27380A0D00554C4A /* XCRemoteSwiftPackageReference "SwiftUIX" */,
+			);
 			productRefGroup = 3A9B7AC82737F49200968A8F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -132,6 +224,84 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0877CA0137741199F9CF69F7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AutoMaster/Pods-AutoMaster-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AutoMaster/Pods-AutoMaster-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AutoMaster/Pods-AutoMaster-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3A1ABD8127380BF400554C4A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$TEMP_DIR/rswift-lastrun",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				$SRCROOT/R.generated.swift,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/R.generated.swift\"\n";
+		};
+		3A1ABD842738116A00554C4A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftFormat/CommandLineTool/swiftformat\" \"$SRCROOT\"\n";
+		};
+		864EDB2CD8862E06CE5603F8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AutoMaster-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		3A9B7AC32737F49200968A8F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -139,6 +309,8 @@
 			files = (
 				3A9B7ACD2737F49200968A8F /* ContentView.swift in Sources */,
 				3A9B7ACB2737F49200968A8F /* AutoMasterApp.swift in Sources */,
+				3A1ABD892738132900554C4A /* R.generated.swift in Sources */,
+				3A1ABD8D273814BA00554C4A /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,20 +435,24 @@
 		};
 		3A9B7AD62737F49400968A8F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FF41DB229C4CC800D2FFCD9C /* Pods-AutoMaster.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"AutoMaster/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "AutoMaster/Resources/Preview\\ Content";
 				DEVELOPMENT_TEAM = X7D7227TDX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AutoMaster/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -286,26 +462,30 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		3A9B7AD72737F49400968A8F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4F105F4ECFAF4AE8226EB54A /* Pods-AutoMaster.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"AutoMaster/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "AutoMaster/Resources/Preview\\ Content";
 				DEVELOPMENT_TEAM = X7D7227TDX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AutoMaster/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -315,7 +495,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -341,6 +521,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3A1ABD7E27380A0D00554C4A /* XCRemoteSwiftPackageReference "SwiftUIX" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftUIX/SwiftUIX";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3A1ABD7F27380A0D00554C4A /* SwiftUIX */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3A1ABD7E27380A0D00554C4A /* XCRemoteSwiftPackageReference "SwiftUIX" */;
+			productName = SwiftUIX;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3A9B7ABF2737F49100968A8F /* Project object */;
 }
