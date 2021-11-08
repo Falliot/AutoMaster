@@ -11,7 +11,7 @@ import SwiftUI
 struct AutoMasterApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            PaggingView()
         }
     }
 }
