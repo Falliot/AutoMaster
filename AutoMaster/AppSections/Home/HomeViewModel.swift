@@ -11,10 +11,18 @@ import Foundation
 // cXVCdZeOo2uYeYyunKBEGFiqootf7wOlBYdi9eYd
 
 class HomeViewModel: ObservableObject {
+    @Published var manufacturerModel: [ManufacturerModel] = []
+
     func request() {
-//        AF.request("https://developers.ria.com/auto/search?api_key=cXVCdZeOo2uYeYyunKBEGFiqootf7wOlBYdi9eYd&PARAMETERS").response { response in
-        AF.request("https://api.autoscout24.com/vehicles").response { response in
-            debugPrint(response)
-        }
+        AF.request("https://private-anon-30d4671a7c-carsapi1.apiary-mock.com/manufacturers")
+            .validate()
+            .responseDecodable(of: [ManufacturerModel].self) { response in
+                guard let cars = response.value else {
+                    print(response.debugDescription)
+                    return
+                }
+                self.manufacturerModel = cars
+                print(cars)
+            }
     }
 }
