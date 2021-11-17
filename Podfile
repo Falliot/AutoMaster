@@ -7,8 +7,6 @@ target 'AutoMaster' do
 
   # Pods for AutoMaster
 pod 'R.swift'
-pod 'SwiftFormat/CLI'
-# pod 'SwiftLint'
 pod 'Alamofire', '~> 5.4'
 pod 'SwiftyJSON', '~> 4.0'
 pod 'SwiftyBeaver'
