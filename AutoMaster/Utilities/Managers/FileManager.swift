@@ -1,5 +1,5 @@
 //
-//  Utilities.swift
+//  FileManager.swift
 //  AutoMaster
 //
 //  Created by Anton on 11.11.2021.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Utilities {
+class FileManager {
     static let shared = Utilities()
 
     func readLocalFile(forName name: String) -> Data? {
