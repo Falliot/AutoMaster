@@ -8,7 +8,7 @@
 import Foundation
 
 class FileManager {
-    static let shared = Utilities()
+    static let shared = FileManager()
 
     func readLocalFile(forName name: String) -> Data? {
         do {

@@ -11,7 +11,9 @@ struct SearchView: View {
     @ObservedObject var viewModel = SearchViewModel()
 
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Image(systemName: "star")
+            .resizable()
+            .frame(width: 50, height: 50, alignment: .center)
     }
 }
 

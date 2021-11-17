@@ -35,7 +35,7 @@ struct HomeView: View {
         }
 
         .onAppear {
-            if let localData = Utilities.shared.readLocalFile(forName: "CarData") {
+            if let localData = FileManager.shared.readLocalFile(forName: "CarData") {
                 viewModel.manufacturerModel = Utilities.shared.parse(jsonData: localData)
             }
         }
