@@ -18,32 +18,30 @@ struct PaggingView: View {
         TabView(selection: $selectedItem) {
             HomeView()
                 .tabItem {
-                    Image(systemName: "1.circle.fill")
-                    Text("🍌🍌")
+                    Label("Home", systemImage: "car")
                 }
                 .tag(TabItem.home)
 
             SearchView()
                 .tabItem {
-                    Image(systemName: "2.square.fill")
-                    Text("🍏🍏")
+                    Label("Search", systemImage: "magnifyingglass")
                 }
                 .tag(TabItem.search)
 
             FavoritesView()
                 .tabItem {
-                    Image(systemName: "3.square.fill")
-                    Text("🍑🍑")
+                    Label("Favorites", systemImage: "star")
                 }
                 .tag(TabItem.favorites)
 
             MenuView()
                 .tabItem {
-                    Image(systemName: "1.square.fill")
-                    Text("🍑🍑")
+                    Image(systemName: "gearshape")
+                    Text("Settings")
                 }
                 .tag(TabItem.menu)
         }
+        .accentColor(.green)
     }
 }
 
