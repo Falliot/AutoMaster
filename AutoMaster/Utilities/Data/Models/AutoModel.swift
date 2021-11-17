@@ -44,10 +44,8 @@ struct AutoModel {
     let fuelConsumption: String
 //    let CO2Emission: String
     let equipment: Equipment
-    let colorAndUpholstery: AutoColor // probably find a better naming
+    let colorAbdUpholstery: ColorAndUpholstery // probably find a better naming
     
     let description: String
-    let fuelType: FuelType
-    let fuelType: FuelType
-
 }
+
