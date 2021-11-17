@@ -20,11 +20,13 @@
 		3A1ABDA42738290500554C4A /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1ABDA32738290500554C4A /* MenuViewModel.swift */; };
 		3A5CF368273D5BDE00ED5F1F /* CarData.json in Resources */ = {isa = PBXBuildFile; fileRef = 3A5CF367273D5BDE00ED5F1F /* CarData.json */; };
 		3A5CF36B273D6B7B00ED5F1F /* ManufacturerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5CF36A273D6B7B00ED5F1F /* ManufacturerModel.swift */; };
-		3A5CF36D273D6C6F00ED5F1F /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5CF36C273D6C6F00ED5F1F /* Utilities.swift */; };
+		3A5CF36D273D6C6F00ED5F1F /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5CF36C273D6C6F00ED5F1F /* FileManager.swift */; };
+		3A82E8912745882C00BCB859 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A82E8902745882B00BCB859 /* Enums.swift */; };
 		3A9B7ACB2737F49200968A8F /* AutoMasterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9B7ACA2737F49200968A8F /* AutoMasterApp.swift */; };
 		3A9B7ACD2737F49200968A8F /* PaggingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9B7ACC2737F49200968A8F /* PaggingView.swift */; };
 		3A9B7ACF2737F49400968A8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A9B7ACE2737F49400968A8F /* Assets.xcassets */; };
 		3A9B7AD22737F49400968A8F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A9B7AD12737F49400968A8F /* Preview Assets.xcassets */; };
+		3AD0946E2744C0AD0031E2BB /* AutoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD0946D2744C0AD0031E2BB /* AutoModel.swift */; };
 		F43A7F171C886CCCE757A184 /* Pods_AutoMaster.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3268ED0E51189BF0150DD3B /* Pods_AutoMaster.framework */; };
 /* End PBXBuildFile section */
 
@@ -42,12 +44,14 @@
 		3A1ABDA32738290500554C4A /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
 		3A5CF367273D5BDE00ED5F1F /* CarData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CarData.json; sourceTree = "<group>"; };
 		3A5CF36A273D6B7B00ED5F1F /* ManufacturerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManufacturerModel.swift; sourceTree = "<group>"; };
-		3A5CF36C273D6C6F00ED5F1F /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		3A5CF36C273D6C6F00ED5F1F /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
+		3A82E8902745882B00BCB859 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		3A9B7AC72737F49200968A8F /* AutoMaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AutoMaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A9B7ACA2737F49200968A8F /* AutoMasterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoMasterApp.swift; sourceTree = "<group>"; };
 		3A9B7ACC2737F49200968A8F /* PaggingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaggingView.swift; sourceTree = "<group>"; };
 		3A9B7ACE2737F49400968A8F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3A9B7AD12737F49400968A8F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		3AD0946D2744C0AD0031E2BB /* AutoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoModel.swift; sourceTree = "<group>"; };
 		4F105F4ECFAF4AE8226EB54A /* Pods-AutoMaster.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutoMaster.release.xcconfig"; path = "Target Support Files/Pods-AutoMaster/Pods-AutoMaster.release.xcconfig"; sourceTree = "<group>"; };
 		E3268ED0E51189BF0150DD3B /* Pods_AutoMaster.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AutoMaster.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF41DB229C4CC800D2FFCD9C /* Pods-AutoMaster.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutoMaster.debug.xcconfig"; path = "Target Support Files/Pods-AutoMaster/Pods-AutoMaster.debug.xcconfig"; sourceTree = "<group>"; };
@@ -82,9 +86,10 @@
 			isa = PBXGroup;
 			children = (
 				3A1ABD8B273814AA00554C4A /* Constants */,
+				3A82E88F2745881300BCB859 /* Data */,
+				3A82E8922745883300BCB859 /* Enums */,
 				3A1ABD8E273814C300554C4A /* Extensions */,
-				3A5CF369273D6B2400ED5F1F /* Models */,
-				3A5CF36C273D6C6F00ED5F1F /* Utilities.swift */,
+				3A82E8942745889700BCB859 /* Managers */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -164,8 +169,33 @@
 			isa = PBXGroup;
 			children = (
 				3A5CF36A273D6B7B00ED5F1F /* ManufacturerModel.swift */,
+				3AD0946D2744C0AD0031E2BB /* AutoModel.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		3A82E88F2745881300BCB859 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				3A5CF369273D6B2400ED5F1F /* Models */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		3A82E8922745883300BCB859 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				3A82E8902745882B00BCB859 /* Enums.swift */,
+			);
+			path = Enums;
+			sourceTree = "<group>";
+		};
+		3A82E8942745889700BCB859 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				3A5CF36C273D6C6F00ED5F1F /* FileManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 		3A9B7ABE2737F49100968A8F = {
@@ -231,7 +261,6 @@
 			buildPhases = (
 				864EDB2CD8862E06CE5603F8 /* [CP] Check Pods Manifest.lock */,
 				3A1ABD8127380BF400554C4A /* ShellScript */,
-				3A1ABD842738116A00554C4A /* ShellScript */,
 				3A9B7AC32737F49200968A8F /* Sources */,
 				3A9B7AC42737F49200968A8F /* Frameworks */,
 				3A9B7AC52737F49200968A8F /* Resources */,
@@ -335,23 +364,6 @@
 			shellPath = /bin/sh;
 			shellScript = "if [ $ACTION != \"indexbuild\" ]; then\n\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/R.generated.swift\"\nfi\n";
 		};
-		3A1ABD842738116A00554C4A /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/SwiftFormat/CommandLineTool/swiftformat\" \"$SRCROOT\"\n";
-		};
 		864EDB2CD8862E06CE5603F8 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -381,9 +393,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3AD0946E2744C0AD0031E2BB /* AutoModel.swift in Sources */,
 				3A1ABD962738282800554C4A /* MenuView.swift in Sources */,
 				3A1ABDA2273828F900554C4A /* FavoritesViewModel.swift in Sources */,
-				3A5CF36D273D6C6F00ED5F1F /* Utilities.swift in Sources */,
+				3A5CF36D273D6C6F00ED5F1F /* FileManager.swift in Sources */,
 				3A1ABD9E273828DC00554C4A /* HomeViewModel.swift in Sources */,
 				3A1ABDA42738290500554C4A /* MenuViewModel.swift in Sources */,
 				3A9B7ACD2737F49200968A8F /* PaggingView.swift in Sources */,
@@ -394,6 +407,7 @@
 				3A5CF36B273D6B7B00ED5F1F /* ManufacturerModel.swift in Sources */,
 				3A1ABD922738280F00554C4A /* HomeView.swift in Sources */,
 				3A1ABD942738281A00554C4A /* SearchView.swift in Sources */,
+				3A82E8912745882C00BCB859 /* Enums.swift in Sources */,
 				3A1ABD8D273814BA00554C4A /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -536,7 +550,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -569,7 +583,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
