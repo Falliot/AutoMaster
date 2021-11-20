@@ -11,7 +11,13 @@ struct FavoritesView: View {
     @ObservedObject var viewModel = FavoritesViewModel()
 
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(alignment: .center, spacing: 5) {
+            Image("favoriteCar")
+                .resizable()
+                .frame(width: 200, height: 200, alignment: .center)
+            Text("Your favorites list is empty")
+                .font(.system(size: 25, weight: .semibold, design: .rounded))
+        }
     }
 }
 
