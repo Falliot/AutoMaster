@@ -10,33 +10,46 @@ import SwiftUI
 
 struct HomeView: View {
     @ObservedObject var viewModel = HomeViewModel()
-
+    @State private var searchText: String = ""
+    
+    var searchResults: [ManufacturerModel] {
+        if searchText.isEmpty {
+            return viewModel.manufacturerModel
+        } else {
+            return viewModel.manufacturerModel.filter { $0.name.contains(searchText) }
+        }
+    }
     var body: some View {
-        List {
-            ForEach(viewModel.manufacturerModel) { car in
-                Text(car.name)
-                WebImage(url: URL(string: car.image.optimized))
-                    // Supports options and context, like `.delayPlaceholder` to show placeholder only when error
-                    .onSuccess { _, _, _ in
-                        // Success
-                        // Note: Data exist only when queried from disk cache or network. Use `.queryMemoryData` if you really need data
+        NavigationView {
+            List {
+                ForEach(searchResults) { car in
+                    HStack {
+                        Text(car.name)
+                        WebImage(url: URL(string: car.image.optimized))
+                        // Supports options and context, like `.delayPlaceholder` to show placeholder only when error
+                            .onSuccess { _, _, _ in
+                                // Success
+                                // Note: Data exist only when queried from disk cache or network. Use `.queryMemoryData` if you really need data
+                            }
+                            .resizable() // Resizable like SwiftUI.Image, you must use this modifier or the view will use the image bitmap size
+                            .placeholder(Image(systemName: "photo")) // Placeholder Image
+                        // Supports ViewBuilder as well
+                            .placeholder {
+                                Rectangle().foregroundColor(.gray)
+                            }
+                            .indicator(.activity) // Activity Indicator
+                            .transition(.fade(duration: 0.5)) // Fade Transition with duration
+                            .scaledToFit()
+                            .frame(width: 50, height: 50, alignment: .center)
                     }
-                    .resizable() // Resizable like SwiftUI.Image, you must use this modifier or the view will use the image bitmap size
-                    .placeholder(Image(systemName: "photo")) // Placeholder Image
-                    // Supports ViewBuilder as well
-                    .placeholder {
-                        Rectangle().foregroundColor(.gray)
-                    }
-                    .indicator(.activity) // Activity Indicator
-                    .transition(.fade(duration: 0.5)) // Fade Transition with duration
-                    .scaledToFit()
-                    .frame(width: 50, height: 50, alignment: .center)
+                }
             }
         }
-
+        .searchable(text: $searchText )
+        .navigationTitle("HomeView")
         .onAppear {
             if let localData = FileManager.shared.readLocalFile(forName: "CarData") {
-                viewModel.manufacturerModel = Utilities.shared.parse(jsonData: localData)
+                viewModel.manufacturerModel = FileManager.shared.parse(jsonData: localData)
             }
         }
     }

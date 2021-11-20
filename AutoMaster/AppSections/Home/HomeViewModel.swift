@@ -10,7 +10,7 @@ import Foundation
 
 // cXVCdZeOo2uYeYyunKBEGFiqootf7wOlBYdi9eYd
 
-class HomeViewModel: ObservableObject {
+class HomeViewModel: ObservableObject, Identifiable {
     @Published var manufacturerModel: [ManufacturerModel] = []
 
     func request() {
