@@ -8,40 +8,62 @@
 import SwiftUI
 
 struct PaggingView: View {
-    enum TabItem {
-        case home, search, favorites, menu
+    enum Tab: String, CaseIterable {
+        case home = "home"
+        case search = "search"
+        case favorites = "favorites"
+        case menu = "menu"
     }
 
-    @State var selectedItem: TabItem = .home
+    @State var currentTab: Tab = .home
+    
+    init() {
+        UITabBar.appearance().isHidden = true
+    }
 
     var body: some View {
-        TabView(selection: $selectedItem) {
-            HomeView()
-                .tabItem {
-                    Label("Home", systemImage: "car")
-                }
-                .tag(TabItem.home)
+        
+        VStack(spacing: 0) {
+            TabView(selection: $currentTab) {
+                HomeView()
+                    .tag(Tab.home)
 
-            SearchView()
-                .tabItem {
-                    Label("Search", systemImage: "magnifyingglass")
-                }
-                .tag(TabItem.search)
+                SearchView()
+                    .tag(Tab.search)
 
-            FavoritesView()
-                .tabItem {
-                    Label("Favorites", systemImage: "star")
-                }
-                .tag(TabItem.favorites)
+                FavoritesView()
+                    .tag(Tab.favorites)
 
-            MenuView()
-                .tabItem {
-                    Image(systemName: "gearshape")
-                    Text("Settings")
+                MenuView()
+                    .tag(Tab.menu)
+            }
+            
+            HStack(spacing: 0) {
+                ForEach(Tab.allCases, id: \.self) { tab in
+                    Button {
+                        currentTab = tab
+                    } label: {
+                        Image(tab.rawValue)
+                            .resizable()
+                            .renderingMode(.template)
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 25, height: 25)
+                            .background(
+                                Color("Green")
+                                    .opacity(0.1)
+                                    .cornerRadius(5)
+                                    .blur(radius: 5)
+                                    .padding(-7)
+                                    .opacity(currentTab == tab ? 1 : 0)
+                            )
+                            .frame(maxWidth: .infinity)
+                            .foregroundColor(currentTab == tab ? Color("Green") : Color.black.opacity(0.3))
+                    }
                 }
-                .tag(TabItem.menu)
+            }
+            .padding([.horizontal, .top])
+            .padding(.bottom, 10)
         }
-        .accentColor(.green)
     }
 }
 

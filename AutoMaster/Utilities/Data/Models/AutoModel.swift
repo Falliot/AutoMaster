@@ -49,3 +49,15 @@ struct AutoModel {
     let description: String
 }
 
+struct Product: Identifiable, Hashable {
+    var id = UUID().uuidString
+    var manufacturer: String
+    var model: String
+    var price: String
+    var mileage: String
+    var year: String
+    var fuel: String
+    var transmission: String
+    var location: String
+    var image: String
+}
