@@ -16,6 +16,7 @@ struct PaggingView: View {
     }
 
     @State var currentTab: Tab = .home
+    @EnvironmentObject var viewModel: PaggingViewModel
     
     init() {
         UITabBar.appearance().isHidden = true
@@ -26,9 +27,10 @@ struct PaggingView: View {
         VStack(spacing: 0) {
             TabView(selection: $currentTab) {
                 HomeView()
+//                    .environmentObject(viewModel)
                     .tag(Tab.home)
 
-                SearchView()
+                SavedSearchView()
                     .tag(Tab.search)
 
                 FavoritesView()
@@ -38,31 +40,33 @@ struct PaggingView: View {
                     .tag(Tab.menu)
             }
             
-            HStack(spacing: 0) {
-                ForEach(Tab.allCases, id: \.self) { tab in
-                    Button {
-                        currentTab = tab
-                    } label: {
-                        Image(tab.rawValue)
-                            .resizable()
-                            .renderingMode(.template)
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 25, height: 25)
-                            .background(
-                                Color("Green")
-                                    .opacity(0.1)
-                                    .cornerRadius(5)
-                                    .blur(radius: 5)
-                                    .padding(-7)
-                                    .opacity(currentTab == tab ? 1 : 0)
-                            )
-                            .frame(maxWidth: .infinity)
-                            .foregroundColor(currentTab == tab ? Color("Green") : Color.black.opacity(0.3))
+            if !viewModel.isHidden {
+                HStack(spacing: 0) {
+                    ForEach(Tab.allCases, id: \.self) { tab in
+                        Button {
+                            currentTab = tab
+                        } label: {
+                            Image(tab.rawValue)
+                                .resizable()
+                                .renderingMode(.template)
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 25, height: 25)
+                                .background(
+                                    Color("Green")
+                                        .opacity(0.1)
+                                        .cornerRadius(5)
+                                        .blur(radius: 5)
+                                        .padding(-7)
+                                        .opacity(currentTab == tab ? 1 : 0)
+                                )
+                                .frame(maxWidth: .infinity)
+                                .foregroundColor(currentTab == tab ? Color("Green") : Color.black.opacity(0.3))
+                        }
                     }
                 }
+                .padding([.horizontal, .top])
+                .padding(.bottom, 10)
             }
-            .padding([.horizontal, .top])
-            .padding(.bottom, 10)
         }
     }
 }

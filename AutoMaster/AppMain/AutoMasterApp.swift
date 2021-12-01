@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct AutoMasterApp: App {
+    
+    let paggingViewModel = PaggingViewModel()
+    
     var body: some Scene {
         WindowGroup {
             PaggingView()
+                .environmentObject(paggingViewModel)
         }
     }
 }

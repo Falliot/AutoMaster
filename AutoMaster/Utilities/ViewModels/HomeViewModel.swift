@@ -6,11 +6,14 @@
 //
 
 import Alamofire
-import Foundation
+import SwiftUI
 
 // cXVCdZeOo2uYeYyunKBEGFiqootf7wOlBYdi9eYd
 
 class HomeViewModel: ObservableObject {
+    
+    @Published var searchActivated: Bool = false
+    
     @Published var manufacturerModel: [ManufacturerModel] = []
     @Published var product: [Product] =
     [

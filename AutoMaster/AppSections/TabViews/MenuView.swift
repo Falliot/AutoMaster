@@ -13,7 +13,7 @@ struct MenuView: View {
     var body: some View {
         NavigationView {
             ScrollView(.vertical, showsIndicators: false) {
-                VStack {
+                VStack(alignment: .center) {
                     Text("Settings")
                         .font(.system(size: 28, weight: .bold, design: .rounded))
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -80,6 +80,10 @@ struct MenuView: View {
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .background(Color("HomeBG").ignoresSafeArea())
                     }
+                    
+                    Text("Version 1.0")
+                        .font(.system(size: 17, weight: .semibold, design: .rounded))
+                        .padding(.top, 15)
                 }
                 .padding(.vertical, 20)
                 .padding(.horizontal, 22)

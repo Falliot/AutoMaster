@@ -10,12 +10,11 @@ import SwiftUI
 
 struct HomeView: View {
     @StateObject var viewModel = HomeViewModel()
-    
+        @EnvironmentObject var paggingViewModel: PaggingViewModel
+
     @State private var searchText: String = ""
     
     let alphabet = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
-    
-    
     
     var searchResults: [ManufacturerModel] {
         if searchText.isEmpty {
@@ -25,28 +24,24 @@ struct HomeView: View {
         }
     }
     
-    
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(spacing: 15) {
                 
                 // Search Bar
-                HStack(spacing: 15) {
-                    Image(systemName: "magnifyingglass")
-                        .font(.title2)
-                        .foregroundColor(.gray)
-                    
-                    TextField("Search", text: .constant(""))
-                        .disabled(true)
+                
+                ZStack {
+                    SearchBar()
                 }
-                .padding(.vertical, 12)
-                .padding(.horizontal)
-                .background(
-                    Capsule()
-                        .strokeBorder(Color.gray, lineWidth: 0.8)
-                )
-                .frame(width: getRect().width / 1.6)
+                .frame(width: getRect().width   / 1.6)
                 .padding(.horizontal, 25)
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    withAnimation(.easeOut) {
+                        viewModel.searchActivated = true
+                        paggingViewModel.isHidden = true
+                    }
+                }
                 
                 Text("Search for vehicles")
                     .font(.system(size: 28, weight: .semibold, design: .rounded))
@@ -64,8 +59,38 @@ struct HomeView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color("HomeBG"))
+        .overlay(
+            ZStack {
+                if viewModel.searchActivated {
+                    SearchView()
+                        .environmentObject(viewModel)
+                        .environmentObject(paggingViewModel)
+                }
+            }
+        )
     }
     
+    @ViewBuilder
+    func SearchBar() -> some View {
+        HStack(spacing: 15) {
+            Image(systemName: "magnifyingglass")
+                .font(.title2)
+//                .foregroundColor(.gray)
+                .foregroundColor(Color("Green"))
+            
+            TextField("", text: .constant(""))
+                .placeholder(when: true) {
+                    Text("Search").foregroundColor(Color("Green"))
+                }
+                .disabled(true)
+        }
+        .padding(.vertical, 12)
+        .padding(.horizontal)
+        .background(
+            Capsule()
+                .strokeBorder(Color("Green"), lineWidth: 0.8)
+        )
+    }
     
     @ViewBuilder
     func ProductCardView(product: Product) -> some View {
@@ -129,11 +154,25 @@ struct HomeView: View {
     }
 }
 
+extension View {
+    func placeholder<Content: View>(
+        when shouldShow: Bool,
+        alignment: Alignment = .leading,
+        @ViewBuilder placeholder: () -> Content) -> some View {
+
+        ZStack(alignment: alignment) {
+            placeholder().opacity(shouldShow ? 1 : 0)
+            self
+        }
+    }
+}
+
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
     }
 }
+
 
 //
 ////        NavigationView {
