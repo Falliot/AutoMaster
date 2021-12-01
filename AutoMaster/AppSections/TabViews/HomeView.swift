@@ -70,25 +70,28 @@ struct HomeView: View {
     @ViewBuilder
     func ProductCardView(product: Product) -> some View {
         VStack(alignment: .leading, spacing: 0) {
-            HStack(alignment: .top) {
+            HStack(alignment: .top, spacing: 5) {
                 Image(product.image)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .cornerRadius(25, corners: [.topLeft])
-                    .clipped()
-                    .offset(x: -9.5, y: -9.8)
+                    .clipped() // ?
+                    .offset(x: -7, y: -9.8)
+                    .frame(width: getRect().width / 1.9)
+                    .shadow(color: Color.black.opacity(0.5), radius: 1, x: 1, y: 1)
+                    
                 
-                VStack(alignment: .trailing, spacing: 5) {
+                VStack(alignment: .leading, spacing: 5) {
                     Group {
-                        Text(product.mileage)
-                            .lineLimit(2)
-                        Text(product.year)
-                        Text(product.fuel)
-                        Text(product.transmission)
-                        Text(product.location)
+                        DetailsInformation(icon: "speed", info: product.mileage)
+                        DetailsInformation(icon: "calendar", info: product.year)
+                        DetailsInformation(icon: product.fuel == .gasoline ? "gas" : "battery", info: product.fuel.rawValue)
+                        DetailsInformation(icon: "gearbox", info: product.transmission)
+                        DetailsInformation(icon: "location", info: product.location)
                     }
                     .font(.system(size: 16, weight: .regular, design: .rounded))
                 }
+                .frame(width: getRect().width / 3.5)
             }
             .padding(5)
             
@@ -106,7 +109,23 @@ struct HomeView: View {
         .padding(5)
         .background(
             Color.white.cornerRadius(25)
+                .shadow(color: Color.black.opacity(0.2), radius: 1, x: 0, y: 1)
         )
+    }
+    
+    
+    @ViewBuilder
+    func DetailsInformation(icon: String, info: String) -> some View {
+        HStack(alignment: .center, spacing: 10) {
+            Image(icon)
+                .resizable()
+                .renderingMode(.template)
+                .foregroundColor(Color("Green"))
+                .frame(width: 20, height: 20)
+            Text(info)
+                .lineLimit(1)
+                .minimumScaleFactor(0.9)
+        }
     }
 }
 

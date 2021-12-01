@@ -56,7 +56,7 @@ struct Product: Identifiable, Hashable {
     var price: String
     var mileage: String
     var year: String
-    var fuel: String
+    var fuel: FuelType
     var transmission: String
     var location: String
     var image: String

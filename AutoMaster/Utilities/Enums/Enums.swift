@@ -19,8 +19,10 @@ enum Transmission {
     case manual, automatic, semiAutomatic
 }
 
-enum FuelType {
-    case gasoline, diesel, electirc, electricGasoline, electricDiesel, cng, ethanol, hydroge, lpg, others
+enum FuelType: String {
+    case gasoline = "Gasoline"
+    case electric = "Electric"
+//    diesel, electricGasoline, electricDiesel, cng, ethanol, hydroge, lpg, others
 }
 
 enum Equipment {
