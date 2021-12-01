@@ -79,7 +79,7 @@ struct HomeView: View {
                     .offset(x: -7, y: -9.8)
                     .frame(width: getRect().width / 1.9)
                     .shadow(color: Color.black.opacity(0.5), radius: 1, x: 1, y: 1)
-                    
+                
                 
                 VStack(alignment: .leading, spacing: 5) {
                     Group {
@@ -132,27 +132,6 @@ struct HomeView: View {
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
-    }
-}
-
-
-extension View {
-    func getRect() -> CGRect {
-        return UIScreen.main.bounds
-    }
-    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
-        clipShape( RoundedCorner(radius: radius, corners: corners) )
-    }
-}
-
-struct RoundedCorner: Shape {
-    
-    var radius: CGFloat = .infinity
-    var corners: UIRectCorner = .allCorners
-    
-    func path(in rect: CGRect) -> Path {
-        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
-        return Path(path.cgPath)
     }
 }
 

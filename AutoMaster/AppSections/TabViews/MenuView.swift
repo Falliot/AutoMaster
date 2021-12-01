@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MenuView: View {
     @ObservedObject var viewModel = MenuViewModel()
-
+    
     var body: some View {
         NavigationView {
             ScrollView(.vertical, showsIndicators: false) {
@@ -87,9 +87,9 @@ struct MenuView: View {
             .navigationBarHidden(true)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(
-            Color("HomeBG")
-                .ignoresSafeArea()
-                )
+                Color("HomeBG")
+                    .ignoresSafeArea()
+            )
         }
     }
     
@@ -99,7 +99,6 @@ struct MenuView: View {
         NavigationLink {
             content()
         } label: {
-            
             HStack {
                 Text(title)
                     .font(.system(size: 17, weight: .semibold, design: .rounded))
