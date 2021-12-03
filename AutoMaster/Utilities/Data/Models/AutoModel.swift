@@ -49,7 +49,7 @@ struct AutoModel {
     let description: String
 }
 
-struct Product: Identifiable, Hashable {
+struct Transport: Identifiable, Hashable {
     var id = UUID().uuidString
     var manufacturer: String
     var model: String
@@ -60,4 +60,5 @@ struct Product: Identifiable, Hashable {
     var transmission: String
     var location: String
     var image: String
+    var icon: String
 }

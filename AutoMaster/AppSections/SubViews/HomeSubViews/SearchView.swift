@@ -11,7 +11,7 @@ import SwiftUIX
 struct SearchView: View {
     
     @EnvironmentObject var homeViewModel: HomeViewModel
-    @EnvironmentObject var pagginViewModel: PaggingViewModel
+    @EnvironmentObject var sharedData: SharedDataModel
     
     var body: some View {
         VStack(spacing: 0) {
@@ -19,7 +19,7 @@ struct SearchView: View {
                 Button {
                     withAnimation(.easeIn) {
                         homeViewModel.searchActivated.toggle()
-                        pagginViewModel.isHidden.toggle()
+                        sharedData.isHidden.toggle()
                     }
                 } label: {
                     Image(systemName: "arrow.left")
@@ -66,6 +66,8 @@ struct SearchView: View {
 
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        SearchView()
+            .environmentObject(HomeViewModel())
+            .environmentObject(SharedDataModel())
     }
 }

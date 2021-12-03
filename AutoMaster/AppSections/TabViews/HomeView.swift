@@ -9,9 +9,13 @@ import SDWebImageSwiftUI
 import SwiftUI
 
 struct HomeView: View {
+    
+    var animation: Namespace.ID
+    
     @StateObject var viewModel = HomeViewModel()
-        @EnvironmentObject var paggingViewModel: PaggingViewModel
-
+    @EnvironmentObject var sharedData: SharedDataModel
+    
+    
     @State private var searchText: String = ""
     
     let alphabet = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
@@ -39,7 +43,7 @@ struct HomeView: View {
                 .onTapGesture {
                     withAnimation(.easeOut) {
                         viewModel.searchActivated = true
-                        paggingViewModel.isHidden = true
+                        sharedData.isHidden = true
                     }
                 }
                 
@@ -49,8 +53,8 @@ struct HomeView: View {
                     .padding(.top)
                     .padding(.horizontal, 25)
                 
-                ForEach(viewModel.product) { product in
-                    ProductCardView(product: product)
+                ForEach(viewModel.transport) { transport in
+                    TransportCardView(transport: transport)
                         .frame(maxWidth: getRect().width, alignment: .leading)
                         .padding(.leading, 25)
                 }
@@ -64,7 +68,7 @@ struct HomeView: View {
                 if viewModel.searchActivated {
                     SearchView()
                         .environmentObject(viewModel)
-                        .environmentObject(paggingViewModel)
+                        .environmentObject(sharedData)
                 }
             }
         )
@@ -75,7 +79,7 @@ struct HomeView: View {
         HStack(spacing: 15) {
             Image(systemName: "magnifyingglass")
                 .font(.title2)
-//                .foregroundColor(.gray)
+            //                .foregroundColor(.gray)
                 .foregroundColor(Color("Green"))
             
             TextField("", text: .constant(""))
@@ -93,26 +97,36 @@ struct HomeView: View {
     }
     
     @ViewBuilder
-    func ProductCardView(product: Product) -> some View {
+    func TransportCardView(transport: Transport) -> some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .top, spacing: 5) {
-                Image(product.image)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .cornerRadius(25, corners: [.topLeft])
-                    .clipped() // ?
-                    .offset(x: -7, y: -9.8)
-                    .frame(width: getRect().width / 1.9)
-                    .shadow(color: Color.black.opacity(0.5), radius: 1, x: 1, y: 1)
+                ZStack {
+                    if sharedData.showDetailTransport {
+                        Image(transport.image)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .opacity(0)
+                    } else {
+                        Image(transport.image)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .matchedGeometryEffect(id: "\(transport.id)IMAGE", in: animation)
+                    }
+                }
+                .cornerRadius(25, corners: [.topLeft])
+                .clipped() // ?
+                .offset(x: -7, y: -9.8)
+                .frame(width: getRect().width / 1.9)
+                .shadow(color: Color.black.opacity(0.5), radius: 1, x: 1, y: 1)
                 
                 
                 VStack(alignment: .leading, spacing: 5) {
                     Group {
-                        DetailsInformation(icon: "speed", info: product.mileage)
-                        DetailsInformation(icon: "calendar", info: product.year)
-                        DetailsInformation(icon: product.fuel == .gasoline ? "gas" : "battery", info: product.fuel.rawValue)
-                        DetailsInformation(icon: "gearbox", info: product.transmission)
-                        DetailsInformation(icon: "location", info: product.location)
+                        DetailsInformation(icon: "speed", info: transport.mileage)
+                        DetailsInformation(icon: "calendar", info: transport.year)
+                        DetailsInformation(icon: transport.fuel == .gasoline ? "gas" : "battery", info: transport.fuel.rawValue)
+                        DetailsInformation(icon: "gearbox", info: transport.transmission)
+                        DetailsInformation(icon: "location", info: transport.location)
                     }
                     .font(.system(size: 16, weight: .regular, design: .rounded))
                 }
@@ -121,9 +135,9 @@ struct HomeView: View {
             .padding(5)
             
             VStack(alignment: .leading) {
-                Text(product.manufacturer + " " + product.model)
+                Text(transport.manufacturer + " " + transport.model)
                     .font(.system(size: 18, weight: .regular, design: .rounded))
-                Text(product.price)
+                Text(transport.price)
                     .font(.system(size: 18, weight: .semibold, design: .rounded))
                     .foregroundColor(Color("Green"))
             }
@@ -136,6 +150,12 @@ struct HomeView: View {
             Color.white.cornerRadius(25)
                 .shadow(color: Color.black.opacity(0.2), radius: 1, x: 0, y: 1)
         )
+        .onTapGesture {
+            withAnimation(.easeInOut) {
+                sharedData.detailTransport = transport
+                sharedData.showDetailTransport = true
+            }
+        }
     }
     
     
@@ -159,17 +179,17 @@ extension View {
         when shouldShow: Bool,
         alignment: Alignment = .leading,
         @ViewBuilder placeholder: () -> Content) -> some View {
-
-        ZStack(alignment: alignment) {
-            placeholder().opacity(shouldShow ? 1 : 0)
-            self
+            
+            ZStack(alignment: alignment) {
+                placeholder().opacity(shouldShow ? 1 : 0)
+                self
+            }
         }
-    }
 }
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        MainPage()
     }
 }
 
