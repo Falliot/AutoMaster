@@ -7,6 +7,13 @@
 
 import Foundation
 
+enum Tab: String, CaseIterable {
+    case home = "home"
+    case search = "search"
+    case favorites = "favorites"
+    case menu = "menu"
+}
+
 enum BodyType {
     case compact, sedan, stationWagon, convertible, coupe, pickUp, van, transporter
 }
