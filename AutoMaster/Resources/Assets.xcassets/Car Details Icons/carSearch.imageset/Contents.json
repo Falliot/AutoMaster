@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "carSearch.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
