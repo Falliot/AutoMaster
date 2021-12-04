@@ -32,9 +32,10 @@ struct TransportDetailsView: View {
                         
                     }
                     Spacer()
-                    Text(transport.manufacturer + " " + transport.model)
-                        .font(.system(size: 25, weight: .bold, design: .rounded))
-                        .foregroundColor(.white)
+//                    Text(transport.manufacturer + " " + transport.model)
+                        Text("Details")
+                            .font(.system(size: 25, weight: .bold, design: .rounded))
+                            .foregroundColor(.white)
                     
                     Spacer()
                     
@@ -67,7 +68,7 @@ struct TransportDetailsView: View {
                                 Image(transport.icon)
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: 45, height: 45)
+                                    .frame(width: 35, height: 35)
                                     .offset(y: 5)
                             } else {
                                 VStack(alignment: .center, spacing: 0) {
@@ -80,15 +81,15 @@ struct TransportDetailsView: View {
                             }
                             
                             Spacer()
-                            
+                            //MARK: - change from gray to red, into animation
                             Button {
-                                
+                                sharedData.addToLiked(transport)
                             } label: {
                                 Image(systemName: "suit.heart.fill")
                                     .font(.title)
                                     .foregroundColor(.white)
                                     .padding(10)
-                                    .background(.red, in: Circle())
+                                    .background(sharedData.isLiked(transport) ? .red : Color("Green"), in: Circle())
                                     .offset(y: -25)
                             }
                         }
@@ -97,9 +98,17 @@ struct TransportDetailsView: View {
                         
                         //MARK: - Transport Data
                         VStack(alignment: .center, spacing: 15) {
+                            HStack {
+                                Text(transport.manufacturer + " " + transport.model)
+                                    .font(.system(size: 25, weight: .medium, design: .rounded))
+                                
+                                Spacer()
                             Text(transport.price)
-                                .font(.system(size: 25, weight: .bold, design: .rounded))
-                                .padding([.top, .bottom], 20)
+                                .font(.system(size: 20, weight: .semibold, design: .rounded))
+                            }
+                            .padding(.top, 40)
+                            .padding(.horizontal, 5)
+                            .frame(maxWidth: .infinity, alignment: .leading)
                             
                             Group {
                                 DetailsField(icon: "calendar", "Year", transport.year)
@@ -121,6 +130,7 @@ struct TransportDetailsView: View {
                 }
             }
         }
+        .animation(.easeInOut, value: sharedData.likedTransports)
         .background(
             Color("HomeBG")
                 .ignoresSafeArea(edges: .top)
@@ -145,15 +155,11 @@ struct TransportDetailsView: View {
                 .font(.system(size: 18, weight: .semibold, design: .rounded))
         }
     }
-    
-    func addToLiked() {
-        
-    }
-    
 }
 
 struct CarDetailsView_Previews: PreviewProvider {
     static var previews: some View {
         TransportDetailsView(animation: Namespace.init().wrappedValue, transport: HomeViewModel().transport[0])
+            .environmentObject(SharedDataModel())
     }
 }

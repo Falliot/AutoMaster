@@ -32,7 +32,7 @@ struct HomeView: View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(spacing: 15) {
                 
-                // Search Bar
+                //MARK: - Search Bar
                 
                 ZStack {
                     SearchBar()
@@ -189,7 +189,9 @@ extension View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        MainPage()
+        HomeView(animation: Namespace.init().wrappedValue)
+            .environmentObject(HomeViewModel())
+            .environmentObject(SharedDataModel())
     }
 }
 
