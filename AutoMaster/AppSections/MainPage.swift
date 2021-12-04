@@ -29,7 +29,8 @@ struct MainPage: View {
                 SavedSearchView()
                     .tag(Tab.search)
 
-                FavoritesView()
+                LikedView()
+                    .environmentObject(sharedData)
                     .tag(Tab.favorites)
 
                 MenuView()
