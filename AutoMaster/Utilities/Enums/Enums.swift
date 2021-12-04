@@ -14,6 +14,11 @@ enum Tab: String, CaseIterable {
     case menu = "menu"
 }
 
+enum PopOver {
+    case technical, basic, equipment, color, none
+    
+}
+
 enum BodyType {
     case compact, sedan, stationWagon, convertible, coupe, pickUp, van, transporter
 }
