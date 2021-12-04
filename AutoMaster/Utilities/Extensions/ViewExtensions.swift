@@ -11,11 +11,18 @@ extension View {
     func getRect() -> CGRect {
         return UIScreen.main.bounds
     }
+    
     func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
         clipShape( RoundedCorner(radius: radius, corners: corners) )
     }
+    
     func hidden(hide: Bool) -> some View {
         opacity(hide ? 0 : 1)
+    }
+    
+    func print(_ value: Any) -> Self {
+        Swift.print(value)
+        return self
     }
 }
 
