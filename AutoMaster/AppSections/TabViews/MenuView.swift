@@ -12,12 +12,15 @@ struct MenuView: View {
     
     var body: some View {
         NavigationView {
-            ScrollView(.vertical, showsIndicators: false) {
-                VStack(alignment: .center) {
-                    Text("Settings")
-                        .font(.system(size: 28, weight: .bold, design: .rounded))
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    
+            VStack {
+                Text("Settings")
+                    .font(.system(size: 29, weight: .bold, design: .rounded))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(Color("Green"))
+                
+                ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: 15) {
                         Text("A")
                             .font(.system(size: 25, weight: .semibold, design: .rounded))
@@ -109,6 +112,7 @@ struct MenuView: View {
                 Spacer()
                 Image(systemName: "chevron.right")
             }
+            
             .foregroundColor(.black)
             .padding()
             .background(
