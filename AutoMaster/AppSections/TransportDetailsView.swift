@@ -30,14 +30,14 @@ struct TransportDetailsView: View {
                             }
                         } label: {
                             Image(systemName: "arrow.left")
-                                .font(.title)
+                                .font(.title2)
                                 .foregroundColor(.white)
                             
                         }
                         Spacer()
                         //                    Text(transport.manufacturer + " " + transport.model)
                         Text("Details")
-                            .font(.system(size: 25, weight: .bold, design: .rounded))
+                            .font(.system(size: 23, weight: .bold, design: .rounded))
                             .foregroundColor(.white)
                         
                         Spacer()
@@ -46,7 +46,7 @@ struct TransportDetailsView: View {
                             
                         } label: {
                             Image(systemName: "square.and.arrow.up")
-                                .font(.title)
+                                .font(.title2)
                                 .foregroundColor(.white)
                         }
                     }
@@ -104,11 +104,11 @@ struct TransportDetailsView: View {
                             VStack(alignment: .center, spacing: 15) {
                                 HStack {
                                     Text(transport.manufacturer + " " + transport.model)
-                                        .font(.system(size: 25, weight: .medium, design: .rounded))
+                                        .font(.system(size: 22, weight: .medium, design: .rounded))
                                     
                                     Spacer()
                                     Text(transport.price)
-                                        .font(.system(size: 20, weight: .semibold, design: .rounded))
+                                        .font(.system(size: 18, weight: .semibold, design: .rounded))
                                 }
                                 .padding(.top, 40)
                                 .padding(.horizontal, 5)
@@ -125,37 +125,25 @@ struct TransportDetailsView: View {
                                 .padding(.horizontal, 5)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 
-                                
                                 //MARK: - Line
                                 Rectangle()
                                     .frame(height: 1)
                                     .foregroundColor(Color("Green"))
                                     .padding(.horizontal, 5)
                                 
-                                SingkeNavigationLink(title: "Technical data", icon: "wrench", popOverType: .technical)//engineering, technicalData
+                                SingkeNavigationLink(title: "Technical data", icon: "wrench", popOverType: .technical)
                                 
-                                DetailsNavigationLink(title: "Basic data", icon: "carSearch", firstInfo: "Body type", secondInfo: "Coupe", thirdInfo: "Condition", forthInfo: "Used", navigation: true) { //carBadge
-                                    Text("")
-                                        .navigationTitle("Basic data")
-                                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                        .background(Color("HomeBG").ignoresSafeArea())
-                                }
+                                DetailsNavigationLink(title: "Basic data", icon: "carSearch", firstInfo: "Body type", secondInfo: "Coupe", thirdInfo: "Condition", forthInfo: "Used", navigation: true, popOverType: .basic)
                                 
-                                DetailsNavigationLink(title: "Vehicle history", icon: "history", firstInfo: "Mileage", secondInfo: transport.mileage, thirdInfo: "First registration", forthInfo: transport.year) { //carBadge
-                                    
-                                }
+                                DetailsNavigationLink(title: "Vehicle history", icon: "history", firstInfo: "Mileage", secondInfo: transport.mileage, thirdInfo: "First registration", forthInfo: transport.year)
                                 
-                                SingkeNavigationLink(title: "Color", icon: "colorDrop", popOverType: .color) //colorPallet, colorFill
+                                SingkeNavigationLink(title: "Color", icon: "colorFill", popOverType: .color)
                                 
                                 SingkeNavigationLink(title: "Equipment", icon: "carSeat", popOverType: .equipment)
                                 
-                                DescriptionNavigationLink(title: "Vehicle description", icon: "create", text: "Used car. Very good condition. All the documents are in place. Clean and nice. Not damadged, not painted") { // googleDocs, clipboard, activityHistory
-                                    Text("Used car. Very good condition. All the documents are in place. Clean and nice. Not damadged, not painted")
-                                        .navigationTitle("Vehicle description")
-                                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                        .background(Color("HomeBG").ignoresSafeArea())
-                                }
+                                DescriptionNavigationLink(title: "Vehicle description", icon: "clipboard", text: "Used car. Very good condition. All the documents are in place. Clean and nice. Not damadged, not painted", popOverType: .description)
                                 
+                                PopOverInfo()
                             }
                             .padding([.horizontal, .bottom], 20)
                             .padding(.top, 20)
@@ -167,20 +155,7 @@ struct TransportDetailsView: View {
                 }
             }
             .popover(isPresented: $showingPopover) {
-                switch popOver {
-                case .technical:
-                    Text("Tech")
-                        .font(.headline)
-                        .padding()
-                case .basic:
-                    Text("Basic")
-                case .equipment:
-                    Text("Equipment")
-                case .color:
-                    Text("Color")
-                case .none:
-                    Text("")
-                }
+                PopOverInfo(popOverType: popOver)
             }
             .navigationBarHidden(true)
             .animation(.easeInOut, value: sharedData.likedTransports)
@@ -197,30 +172,27 @@ struct TransportDetailsView: View {
         HStack {
             Label {
                 Text(leftDetail)
-                    .font(.system(size: 18, weight: .regular, design: .rounded))
+                    .font(.system(size: 15, weight: .regular, design: .rounded))
             } icon: {
                 Image(icon)
                     .resizable()
                     .renderingMode(.template)
                     .foregroundColor(Color("Green"))
-                    .frame(width: 30, height: 30)
+                    .frame(width: 25, height: 25)
             }
             Spacer()
             Text(rightDetail)
-                .font(.system(size: 18, weight: .semibold, design: .rounded))
+                .font(.system(size: 15, weight: .semibold, design: .rounded))
         }
     }
     
     
     @ViewBuilder
-    func SingkeNavigationLink(title: String, icon: String, popOverType: PopOver) -> some View {
-        //        NavigationLink {
-        //            content()
-        //        } label: {
+    func SingkeNavigationLink(title: String, icon: String, popOverType: PopOver = .none) -> some View {
         HStack {
             Label {
                 Text(title)
-                    .font(.system(size: 17, weight: .semibold, design: .rounded))
+                    .font(.system(size: 15, weight: .semibold, design: .rounded))
             } icon: {
                 Image(icon)
                     .resizable()
@@ -238,7 +210,6 @@ struct TransportDetailsView: View {
                 }
         }
         .foregroundColor(.black)
-        //        }
         .padding(.horizontal, 5)
         Rectangle()
             .frame(height: 1)
@@ -247,35 +218,35 @@ struct TransportDetailsView: View {
     }
     
     @ViewBuilder
-    func DescriptionNavigationLink<Detail: View>(title: String, icon: String, text: String, @ViewBuilder content: @escaping () -> Detail) -> some View {
-        NavigationLink {
-            content()
-        } label: {
-            VStack(alignment: .leading) {
-                HStack {
-                    Label {
-                        Text(title)
-                            .font(.system(size: 17, weight: .semibold, design: .rounded))
-                    } icon: {
-                        Image(icon)
-                            .resizable()
-                            .renderingMode(.template)
-                            .aspectRatio(contentMode: .fit)
-                            .foregroundColor(Color("Green"))
-                            .frame(width: 25, height: 25)
-                    }
-                }
-                
-                HStack {
-                    Text(text)
-                        .font(.system(size: 17, weight: .regular, design: .rounded))
-                        .lineLimit(1)
-                    Spacer()
-                    Image(systemName: "chevron.right")
+    func DescriptionNavigationLink(title: String, icon: String, text: String, popOverType: PopOver = .none) -> some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Label {
+                    Text(title)
+                        .font(.system(size: 15, weight: .semibold, design: .rounded))
+                } icon: {
+                    Image(icon)
+                        .resizable()
+                        .renderingMode(.template)
+                        .aspectRatio(contentMode: .fit)
+                        .foregroundColor(Color("Green"))
+                        .frame(width: 25, height: 25)
                 }
             }
-            .foregroundColor(.black)
+            
+            HStack {
+                Text(text)
+                    .font(.system(size: 15, weight: .regular, design: .rounded))
+                    .lineLimit(1)
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .onTapGesture {
+                        self.popOver = popOverType
+                        showingPopover = true
+                    }
+            }
         }
+        .foregroundColor(.black)
         .padding(.horizontal, 5)
         Rectangle()
             .frame(height: 1)
@@ -284,11 +255,11 @@ struct TransportDetailsView: View {
     }
     
     @ViewBuilder
-    func DetailsNavigationLink<Detail: View>(title: String, icon: String, firstInfo: String, secondInfo: String, thirdInfo: String, forthInfo: String, navigation: Bool = false, @ViewBuilder content: @escaping () -> Detail) -> some View {
+    func DetailsNavigationLink(title: String, icon: String, firstInfo: String, secondInfo: String, thirdInfo: String, forthInfo: String, navigation: Bool = false, popOverType: PopOver = .none) -> some View {
         HStack {
             Label {
                 Text(title)
-                    .font(.system(size: 17, weight: .semibold, design: .rounded))
+                    .font(.system(size: 15, weight: .semibold, design: .rounded))
             } icon: {
                 Image(icon)
                     .resizable()
@@ -300,35 +271,10 @@ struct TransportDetailsView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 5)
-        .padding(.bottom, 10)
         
-        VStack {
-            HStack(alignment: .top) {
-                VStack(alignment: .leading, spacing: 10) {
-                    Text(firstInfo)
-                        .font(.system(size: 17, weight: .regular, design: .rounded))
-                    Text(thirdInfo)
-                        .font(.system(size: 17, weight: .regular, design: .rounded))
-                }
-                
-                Spacer()
-                
-                VStack(alignment: .leading, spacing: 10) {
-                    Text(secondInfo)
-                        .font(.system(size: 17, weight: .semibold, design: .rounded))
-                    Text(forthInfo)
-                        .font(.system(size: 17, weight: .semibold, design: .rounded))
-                }
-                
-                Spacer()
-                
-                NavigationLink {
-                    content()
-                } label: {
-                    Image(systemName: "chevron.right")
-                }
-                .opacity(navigation ? 1: 0)
-            }
+        VStack(spacing: 10) {
+            SingleInfo(infoTitle: firstInfo, infoDescription: secondInfo, navigation: navigation, popOverType: .basic)
+            SingleInfo(infoTitle: thirdInfo, infoDescription: forthInfo)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .foregroundColor(.black)
@@ -341,6 +287,150 @@ struct TransportDetailsView: View {
             .padding(5)
     }
     
+    @ViewBuilder
+    func PopOverHeader(title: String) -> some View {
+        VStack(spacing: 0) {
+            HStack(spacing: 20) {
+                Button { } label: {
+                    Image(systemName: "arrow.left")
+                        .font(.title2)
+                        .foregroundColor(.white)
+                }
+                .opacity(0)
+                
+                Spacer()
+                
+                Text(title)
+                    .font(.system(size: 18, weight: .bold, design: .rounded))
+                    .foregroundColor(.white)
+                
+                Spacer()
+                
+                Button {
+                    showingPopover = false
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .resizable()
+                        .renderingMode(.template)
+                        .aspectRatio(contentMode: .fit)
+                        .foregroundColor(.white)
+                        .frame(width: 25, height: 25)
+                }
+            }
+            .padding([.horizontal, .top], 15)
+            .padding(.bottom, 10)
+            .background(Color("Green"))
+            Rectangle()
+                .frame(height: 1)
+                .foregroundColor(.black.opacity(0.3))
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.bottom, 5)
+    }
+    
+    @ViewBuilder
+    func DetailPopOver<Detail: View>(title: String, @ViewBuilder content: @escaping () -> Detail) -> some View {
+        VStack(spacing: 10) {
+            PopOverHeader(title: title)
+            content()
+                .padding(.horizontal, 25)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .background(Color("HomeBG"))
+    }
+    
+    
+    @ViewBuilder
+    func PopOverInfo(popOverType: PopOver = .none) -> some View {
+        switch popOver {
+        case .technical:
+            DetailPopOver(title: "Technical data", content: {
+                SinglePopOverInfo(infoTitle: "Power", infoDescription: "40 kW (54 hp)")
+                SinglePopOverInfo(infoTitle: "Transmission", infoDescription: transport.transmission)
+                SinglePopOverInfo(infoTitle: "Engine size", infoDescription: "973 cc")
+                SinglePopOverInfo(infoTitle: "Gears", infoDescription: "5")
+            })
+            
+        case .basic:
+            DetailPopOver(title: "Basic data", content: {
+                SinglePopOverInfo(infoTitle: "Body tyoe", infoDescription: "Compact")
+                SinglePopOverInfo(infoTitle: "Condition", infoDescription: "Used")
+                SinglePopOverInfo(infoTitle: "Door count", infoDescription: "3")
+                SinglePopOverInfo(infoTitle: "Country version", infoDescription: "Germany")
+            })
+            
+        case .equipment:
+            DetailPopOver(title: "Equipment", content: {
+                VStack {
+                    Label {
+                        Text("Comfort & Convenience")
+                    } icon: {
+                        Image("carSeat")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 25, height: 25)
+                            .foregroundColor(Color("Green"))
+                    }
+                    Text("Sunroof")
+                }
+            })
+        case .color:
+            DetailPopOver(title: "Color", content: {
+                SinglePopOverInfo(infoTitle: "Body colot", infoDescription: "Blue")
+                SinglePopOverInfo(infoTitle: "Manufacturer color", infoDescription: "blau")
+                SinglePopOverInfo(infoTitle: "Interior color", infoDescription: "Other")
+                SinglePopOverInfo(infoTitle: "Interior fittings", infoDescription: "Cloth")
+            })
+        case .description:
+            DetailPopOver(title: "Vehicle description", content: {
+                Text("Used car. Very good condition. All the documents are in place. Clean and nice. Not damadged, not painted")
+                    .font(.system(size: 17, weight: .regular, design: .rounded))
+            })
+        case .none:
+            Text("")
+        }
+    }
+    
+    @ViewBuilder
+    func SingleInfo(infoTitle: String, infoDescription: String, navigation: Bool = false, popOverType: PopOver = .none) -> some View {
+        HStack {
+            Text(infoTitle)
+                .font(.system(size: 15, weight: .regular, design: .rounded))
+                .frame(maxWidth: .infinity, alignment: .leading)
+            
+            Text(infoDescription)
+                .font(.system(size: 15, weight: .semibold, design: .rounded))
+                .frame(maxWidth: .infinity, alignment: .leading)
+            
+            Image(systemName: "chevron.right")
+                .opacity(navigation ? 1: 0)
+                .onTapGesture {
+                    if navigation {
+                        self.popOver = popOverType
+                        showingPopover = true
+                    }
+                }
+        }
+    }
+    
+    @ViewBuilder
+    func SinglePopOverInfo(infoTitle: String, infoDescription: String) -> some View {
+        HStack {
+            Text(infoTitle)
+                .font(.system(size: 15, weight: .regular, design: .rounded))
+                .frame(maxWidth: .infinity, alignment: .leading)
+            
+            Text(infoDescription)
+                .font(.system(size: 15, weight: .semibold, design: .rounded))
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        
+        Rectangle()
+            .frame(height: 1)
+            .foregroundColor(Color("Green"))
+            .padding(.vertical, 5)
+            .padding(.horizontal, 0)
+    }
 }
 
 struct CarDetailsView_Previews: PreviewProvider {
