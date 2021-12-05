@@ -9,9 +9,10 @@ import SwiftUI
 
 @main
 struct AutoMasterApp: App {
+    
     var body: some Scene {
         WindowGroup {
-            PaggingView()
+            MainPage()
         }
     }
 }

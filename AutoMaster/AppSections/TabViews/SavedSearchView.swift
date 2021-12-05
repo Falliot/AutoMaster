@@ -1,5 +1,5 @@
 //
-//  SearchView.swift
+//  SavedSearchView.swift
 //  AutoMaster
 //
 //  Created by Anton on 07.11.2021.
@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct SearchView: View {
-    @ObservedObject var viewModel = SearchViewModel()
+struct SavedSearchView: View {
+    @ObservedObject var viewModel = SavedSearchViewModel()
 
     var body: some View {
         VStack(alignment: .center, spacing: 5) {
@@ -21,8 +21,8 @@ struct SearchView: View {
     }
 }
 
-struct SearchView_Previews: PreviewProvider {
+struct SavedSearchView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchView()
+        SavedSearchView()
     }
 }
