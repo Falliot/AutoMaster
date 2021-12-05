@@ -14,10 +14,12 @@ struct MenuView: View {
         NavigationView {
             VStack {
                 Text("Settings")
-                    .font(.system(size: 29, weight: .bold, design: .rounded))
+                    .font(.system(size: 23, weight: .bold, design: .rounded))
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .foregroundColor(.white)
-                    .padding()
+                    .padding(10)
+                    .padding(.horizontal, 15)
+                    .padding(.bottom, 10)
                     .background(Color("Green"))
                 
                 ScrollView(.vertical, showsIndicators: false) {

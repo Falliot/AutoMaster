@@ -31,7 +31,7 @@ struct SearchView: View {
                 Spacer()
                 
                 Text("Search")
-                    .font(.system(size: 30, weight: .semibold, design: .rounded))
+                    .font(.system(size: 23, weight: .bold, design: .rounded))
                     .foregroundColor(.white)
 //                    .foregroundColor(Color.black.opacity(0.3))
                 
@@ -51,8 +51,9 @@ struct SearchView: View {
                 }
             }
             .frame(maxWidth: .infinity)
-            .padding([.horizontal, .top])
-            .padding([.top, .bottom])
+            .padding(10)
+            .padding(.horizontal, 15)
+            .padding(.bottom, 10)
             .background(Color("Green"))
 //            .ignoresSafeArea()
         }

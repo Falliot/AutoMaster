@@ -15,7 +15,7 @@ enum Tab: String, CaseIterable {
 }
 
 enum PopOver {
-    case technical, basic, equipment, color, none
+    case technical, basic, equipment, color, description, none
     
 }
 

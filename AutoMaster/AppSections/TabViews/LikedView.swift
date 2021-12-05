@@ -17,7 +17,7 @@ struct LikedView: View {
         VStack(spacing: 0) {
             HStack {
                 Text("Favorites")
-                    .font(.system(size: 29, weight: .bold, design: .rounded))
+                    .font(.system(size: 23, weight: .bold, design: .rounded))
                     .foregroundColor(.white)
                 
                 Spacer()
@@ -35,8 +35,10 @@ struct LikedView: View {
                 }
                 .opacity(sharedData.likedTransports.isEmpty ? 0 : 1)
             }
-            .padding()
+            .padding(.horizontal, 15)
+            .padding(.bottom, 10)
             .background(Color("Green"))
+            
             ScrollView(.vertical, showsIndicators: false) {
                 VStack {
                     if sharedData.likedTransports.isEmpty {
