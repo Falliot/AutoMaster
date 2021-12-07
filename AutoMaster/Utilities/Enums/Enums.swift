@@ -5,7 +5,7 @@
 //  Created by Anton on 17.11.2021.
 //
 
-import Foundation
+import SwiftUI
 
 enum Tab: String, CaseIterable {
     case home = "home"
@@ -27,14 +27,15 @@ enum AutoCondition {
     case any, new, used
 }
 
-enum Transmission {
-    case manual, automatic, semiAutomatic
+enum Transmission: String, CaseIterable, Identifiable {
+    case manual, automatic, semi_Automatic
+    var id: String { self.rawValue.capitalized }
+    
 }
 
-enum FuelType: String {
-    case gasoline = "Gasoline"
-    case electric = "Electric"
-//    diesel, electricGasoline, electricDiesel, cng, ethanol, hydroge, lpg, others
+enum FuelType: String, CaseIterable, Identifiable {
+    case gasoline, electric, diesel, electricGasoline, electricDiesel, cng, ethanol, hydroge, lpg, others
+    var id: String { self.rawValue.capitalized }
 }
 
 enum Equipment {
@@ -70,8 +71,40 @@ enum ColorAndUpholstery {
         // metallic ?
         // alloy wheels ? (In Paint, RIMS)
     }
-    
-    enum InteriorColor {
-        case any, beige, black, blue, brown, green, grey, orange, red, white, yellow, other
+}
+enum InteriorColor: String, CaseIterable, Identifiable {
+    case any, black, blue, brown, gold, green, gray, orange, purple, pink, red, violet, white, yellow
+    var id: String { self.rawValue.capitalized }
+    var color: Color {
+        switch self {
+        case .any:
+            return Color.clear
+        case .black:
+            return .black
+        case .blue:
+            return .blue
+        case .brown:
+            return .brown
+        case .gold:
+            return Color(red: 255, green: 215, blue: 0)
+        case .green:
+            return .green
+        case .gray:
+            return .gray
+        case .orange:
+            return .orange
+        case .purple:
+            return .purple
+        case .pink:
+            return .pink
+        case .red:
+            return .red
+        case .violet:
+            return Color(red: 143, green: 0, blue: 255)
+        case .white:
+            return .white
+        case .yellow:
+            return .yellow
+        }
     }
 }
