@@ -11,6 +11,7 @@ class SharedDataModel: ObservableObject {
     @Published var detailTransport: Transport?
     @Published var showDetailTransport: Bool = false
     
+    var opelIcons = ["opelImg", "opelImg1", "opelImg2", "opelImg3", "opelImg4", "opelImg5"]
     
     @Published var likedTransports: [Transport] = []
     

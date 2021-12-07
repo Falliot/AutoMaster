@@ -97,13 +97,14 @@ struct LikedView: View {
     
     @ViewBuilder
     func CardView(transport: Transport) -> some View {
-        HStack(spacing: 15) {
+        HStack(spacing: 7) {
             //MARK: - right side(image)
             Image(transport.image)
                 .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: getRect().width * 0.3)
-                .cornerRadius(25)
+                .aspectRatio(contentMode: .fill)
+                .frame(width: getRect().width * 0.33, height: getRect().width * 0.24, alignment: .leading)
+                .cornerRadius(25, corners: [.topLeft, .bottomLeft])
+                .offset(x: -4)
             
             //MARK: - left side
             VStack {
@@ -145,7 +146,7 @@ struct LikedView: View {
         //FIXME: padding - 15, mileage shanges
         .padding(.horizontal, 4)
         .padding(.vertical, 10)
-        
+        .frame(height: getRect().width * 0.24, alignment: .leading)
         .background(
             Color.white.cornerRadius(25)
                 .shadow(color: Color.black.opacity(0.2), radius: 1, x: 0, y: 1)
@@ -156,6 +157,19 @@ struct LikedView: View {
 struct FavoritesView_Previews: PreviewProvider {
     static var previews: some View {
         LikedView()
-            .environmentObject(SharedDataModel())
+           .environmentObject(SharedDataModel())
+           .previewDevice(PreviewDevice(rawValue: "iPhone 8"))
+        
+        LikedView()
+           .environmentObject(SharedDataModel())
+            .previewDevice(PreviewDevice(rawValue: "iPhone 11"))
+        
+        LikedView()
+           .environmentObject(SharedDataModel())
+            .previewDevice(PreviewDevice(rawValue: "iPhone 12"))
+        
+        LikedView()
+           .environmentObject(SharedDataModel())
+            .previewDevice(PreviewDevice(rawValue: "iPhone 12 Pro Max"))
     }
 }

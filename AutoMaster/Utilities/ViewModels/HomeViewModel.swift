@@ -19,7 +19,7 @@ class HomeViewModel: ObservableObject {
     @Published var transport: [Transport] =
     [
         Transport(manufacturer: "Opel", model: "Corsa", price: "1,000$", mileage: "54.300 km", year: "2001", fuel: .gasoline, transmission: "Manual", location: "Gliwice", image: "opel", icon: "opelIcon"),
-        Transport(manufacturer: "Mazda", model: "6", price: "3,600$", mileage: "154.300 km", year: "2009", fuel: .gasoline, transmission: "Auto", location: "Krakow", image: "mazda", icon: ""),
+//        Transport(manufacturer: "Mazda", model: "6", price: "3,600$", mileage: "154.300 km", year: "2009", fuel: .gasoline, transmission: "Auto", location: "Krakow", image: "mazda", icon: ""),
         Transport(manufacturer: "Audi", model: "A6", price: "3,000$", mileage: "104.300 km", year: "1998", fuel: .gasoline, transmission: "Manual", location: "Gliwice", image: "audi", icon: ""),
         Transport(manufacturer: "Fiat", model: "Panda", price: "600$", mileage: "234.300 km", year: "2004", fuel: .gasoline, transmission: "Manual", location: "Gliwice", image: "fiat", icon: ""),
         Transport(manufacturer: "Tesla", model: "Model 3", price: "45,700$", mileage: "24.300 km", year: "2019", fuel: .electric, transmission: "Manual", location: "Gliwice", image: "tesla", icon: "teslaIcon"),

@@ -79,7 +79,6 @@ struct HomeView: View {
         HStack(spacing: 15) {
             Image(systemName: "magnifyingglass")
                 .font(.title2)
-            //                .foregroundColor(.gray)
                 .foregroundColor(Color("Green"))
             
             TextField("", text: .constant(""))
@@ -99,23 +98,24 @@ struct HomeView: View {
     @ViewBuilder
     func TransportCardView(transport: Transport) -> some View {
         VStack(alignment: .leading, spacing: 0) {
-            HStack(alignment: .top, spacing: 5) {
+            HStack(alignment: .top, spacing: 10) {
                 ZStack {
                     if sharedData.showDetailTransport {
                         Image(transport.image)
                             .resizable()
-                            .aspectRatio(contentMode: .fit)
+                            .aspectRatio(contentMode: .fill)
+                            .border(.pink)
                             .opacity(0)
                     } else {
                         Image(transport.image)
                             .resizable()
-                            .aspectRatio(contentMode: .fit)
+                            .aspectRatio(contentMode: .fill)
                             .matchedGeometryEffect(id: "\(transport.id)IMAGE", in: animation)
                     }
                 }
+                .frame(width: getRect().width * 0.53, height: 130)
                 .cornerRadius(25, corners: [.topLeft])
-                .clipped() // ?
-                .offset(x: -7, y: -9.8)
+                .offset(y: -9.7)
                 .frame(width: getRect().width / 1.9)
                 .shadow(color: Color.black.opacity(0.5), radius: 1, x: 1, y: 1)
                 
@@ -130,9 +130,10 @@ struct HomeView: View {
                     }
                     .font(.system(size: 16, weight: .regular, design: .rounded))
                 }
-                .frame(width: getRect().width / 3.5)
+                .frame(width: getRect().width / 3.3)
             }
             .padding(5)
+            
             
             VStack(alignment: .leading) {
                 Text(transport.manufacturer + " " + transport.model)
@@ -142,7 +143,7 @@ struct HomeView: View {
                     .foregroundColor(Color("Green"))
             }
             .offset(y: -7)
-            .padding(5)
+            .padding(.horizontal, 15)
         }
         .frame(width: getRect().width / 1.2)
         .padding(5)
@@ -189,9 +190,18 @@ extension View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(animation: Namespace.init().wrappedValue)
-            .environmentObject(HomeViewModel())
-            .environmentObject(SharedDataModel())
+ 
+//        MainPage()
+//            .previewDevice(PreviewDevice(rawValue: "iPhone 8"))
+//        
+        MainPage()
+            .previewDevice(PreviewDevice(rawValue: "iPhone 11"))
+//
+//        MainPage()
+//            .previewDevice(PreviewDevice(rawValue: "iPhone 12"))
+//
+//        MainPage()
+//            .previewDevice(PreviewDevice(rawValue: "iPhone 12 Pro Max"))
     }
 }
 

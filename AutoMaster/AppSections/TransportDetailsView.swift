@@ -16,6 +16,7 @@ struct TransportDetailsView: View {
     
     @State private var showingPopover = false
     @State var popOver: PopOver = .none
+    @State private var selectedTab = 0
     
     var body: some View {
         NavigationView {
@@ -54,16 +55,29 @@ struct TransportDetailsView: View {
                     .padding(.bottom, 10)
                 }
                 .background(Color("Green"))
+                .zIndex(1)
                 
                 //MARK: - ScrollView
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack {
-                        Image(transport.image)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .matchedGeometryEffect(id: "\(transport.id)IMAGE", in: animation)
-                            .frame(maxHeight: .infinity)
-                            .padding(.bottom, 40)
+                        TabView {
+                            ForEach(sharedData.opelIcons, id: \.self) { icon in
+                                Image(icon)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                            }
+                        }
+                        .matchedGeometryEffect(id: "\(transport.id)IMAGE", in: animation)
+                        .frame(width: getRect().width, height: getRect().width * 0.75)
+                        .tabViewStyle(.page)
+                        .padding(.bottom, 40)
+                        
+//                        Image("opelImg")//transport.image)
+//                            .resizable()
+//                            .aspectRatio(contentMode: .fit)
+//                            .matchedGeometryEffect(id: "\(transport.id)IMAGE", in: animation)
+//                            .frame(maxHeight: .infinity)
+//                            .padding(.bottom, 40)
                         
                         //MARK: - Like and Icon
                         ZStack(alignment: .top) {
@@ -97,7 +111,7 @@ struct TransportDetailsView: View {
                                         .offset(y: -25)
                                 }
                             }
-                            .zIndex(1)
+                            .zIndex(2)
                             .padding(.horizontal, 20)
                             
                             //MARK: - Transport Data
@@ -142,8 +156,6 @@ struct TransportDetailsView: View {
                                 SingkeNavigationLink(title: "Equipment", icon: "carSeat", popOverType: .equipment)
                                 
                                 DescriptionNavigationLink(title: "Vehicle description", icon: "clipboard", text: "Used car. Very good condition. All the documents are in place. Clean and nice. Not damadged, not painted", popOverType: .description)
-                                
-                                PopOverInfo()
                             }
                             .padding([.horizontal, .bottom], 20)
                             .padding(.top, 20)
@@ -154,7 +166,7 @@ struct TransportDetailsView: View {
                     }
                 }
             }
-            .popover(isPresented: $showingPopover) {
+            .sheet(isPresented: $showingPopover) {
                 PopOverInfo(popOverType: popOver)
             }
             .navigationBarHidden(true)
@@ -163,6 +175,7 @@ struct TransportDetailsView: View {
                 Color("HomeBG")
                     .ignoresSafeArea(edges: .top)
             )
+            .zIndex(0)
         }
         .print("\(popOver)")
     }
