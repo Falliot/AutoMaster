@@ -14,9 +14,9 @@ struct SearchView: View {
     @EnvironmentObject var homeViewModel: HomeViewModel
     @EnvironmentObject var sharedData: SharedDataModel
     
-    @ObservedObject var priceSlider = CustomSlider(start: 0, end: 100000)
-    @ObservedObject var yearSlider = CustomSlider(start: 1950, end: 2021)
-    @ObservedObject var milleageSlider = CustomSlider(start: 5000, end: 200000)
+    @ObservedObject var priceSlider = CustomSlider(start: 0, end: 100000, step: 1000)
+    @ObservedObject var yearSlider = CustomSlider(start: 1950, end: 2021, step: 1)
+    @ObservedObject var milleageSlider = CustomSlider(start: 5000, end: 200000, step: 15000)
     
     @State private var selectedTransmission = Transmission.manual
     @State private var selectedFuel = FuelType.gasoline
@@ -180,7 +180,7 @@ struct SearchView: View {
                         .pickerStyle(.segmented)
                         .padding([.horizontal, .bottom], 15)
                     }
-                    
+
                     //MARK: - Fuel
                     Title(title: "Fuel")
                     ScrollView(.horizontal, showsIndicators: false) {
@@ -201,7 +201,7 @@ struct SearchView: View {
                                         .foregroundColor(isSelected ? .white : .black)
                                         .padding(5)
                                 }
-                                
+
                                 .background(isSelected ? Color("Green") : .white)
                                 .cornerRadius(10)
                             }
@@ -212,7 +212,7 @@ struct SearchView: View {
                     .background(.white)
                     .cornerRadius(25)
                     .padding([.horizontal, .bottom], 15)
-                    
+
                     //MARK: - Variant Fuel
                     //                ScrollView(.horizontal, showsIndicators: false) {
                     //                    Picker("Fuel", selection: $selectedFuel) {
@@ -223,8 +223,8 @@ struct SearchView: View {
                     //                    .pickerStyle(.segmented)
                     //                }
                     //                .padding([.horizontal, .bottom], 15)
-                    
-                    
+
+
                     //MARK: - Color
                     Title(title: "Color")
                     ScrollView(.horizontal, showsIndicators: false) {
@@ -244,7 +244,7 @@ struct SearchView: View {
                                         color.color
                                             .frame(width: 25, height: 25)
                                             .clipShape(Circle())
-                                        
+
                                         Text(color.id)
                                             .font(.system(size: 15, weight: .regular, design: .rounded))
                                             .foregroundColor(isSelected ? .white : .black)
@@ -315,208 +315,3 @@ struct SearchView_Previews: PreviewProvider {
             .environmentObject(SharedDataModel())
     }
 }
-
-
-import SwiftUI
-import Combine
-
-//SliderValue to restrict double range: 0.0 to 1.0
-@propertyWrapper
-struct SliderValue {
-    var value: Double
-    
-    init(wrappedValue: Double) {
-        self.value = wrappedValue
-    }
-    
-    var wrappedValue: Double {
-        get { value }
-        set { value = min(max(0.0, newValue), 1.0) }
-    }
-}
-
-class SliderHandle: ObservableObject {
-    
-    //Slider Size
-    let sliderWidth: CGFloat
-    let sliderHeight: CGFloat
-    
-    //Slider Range
-    let sliderValueStart: Double
-    let sliderValueRange: Double
-    
-    //Slider Handle
-    var diameter: CGFloat = 25
-    var startLocation: CGPoint
-    
-    //Current Value
-    @Published var currentPercentage: SliderValue
-    
-    //Slider Button Location
-    @Published var onDrag: Bool
-    @Published var currentLocation: CGPoint
-    
-    init(sliderWidth: CGFloat, sliderHeight: CGFloat, sliderValueStart: Double, sliderValueEnd: Double, startPercentage: SliderValue) {
-        self.sliderWidth = sliderWidth
-        self.sliderHeight = sliderHeight
-        
-        self.sliderValueStart = sliderValueStart
-        self.sliderValueRange = sliderValueEnd - sliderValueStart
-        
-        let startLocation = CGPoint(x: (CGFloat(startPercentage.wrappedValue)/1.0)*sliderWidth, y: sliderHeight/2)
-        
-        self.startLocation = startLocation
-        self.currentLocation = startLocation
-        self.currentPercentage = startPercentage
-        
-        self.onDrag = false
-    }
-    
-    lazy var sliderDragGesture: _EndedGesture<_ChangedGesture<DragGesture>>  = DragGesture()
-        .onChanged { value in
-            self.onDrag = true
-            
-            let dragLocation = value.location
-            
-            //Restrict possible drag area
-            self.restrictSliderBtnLocation(dragLocation)
-            
-            //Get current value
-            self.currentPercentage.wrappedValue = Double(self.currentLocation.x / self.sliderWidth)
-            //            print("Current percentage: \(self.currentPercentage.wrappedValue)")
-        }.onEnded { _ in
-            self.onDrag = false
-        }
-    
-    private func restrictSliderBtnLocation(_ dragLocation: CGPoint) {
-        //On Slider Widthq
-        let xOffset = min(max(0, dragLocation.x), sliderWidth)
-        calcSliderBtnLocation(CGPoint(x: xOffset, y: dragLocation.y))
-    }
-    
-    private func calcSliderBtnLocation(_ dragLocation: CGPoint) {
-        if dragLocation.y != sliderHeight/2 {
-            currentLocation = CGPoint(x: dragLocation.x, y: sliderHeight/2)
-        } else {
-            currentLocation = dragLocation
-        }
-    }
-    
-    //Current Value
-    var currentValue: Int {
-        //        print("Current percentage: \(currentPercentage.wrappedValue)")
-        //        print("Slider value range \(sliderValueRange )")
-        //        print("Value   \(Int(sliderValueStart + currentPercentage.wrappedValue * sliderValueRange))")
-        return Int(sliderValueStart + currentPercentage.wrappedValue * sliderValueRange)
-    }
-}
-
-class CustomSlider: ObservableObject {
-    
-    //Slider Size
-    final let width: CGFloat = UIScreen.main.bounds.width - 90
-    final let lineWidth: CGFloat = 5
-    
-    //Slider value range from valueStart to valueEnd
-    final let valueStart: Double
-    final let valueEnd: Double
-    
-    //Slider Handle
-    @Published var highHandle: SliderHandle
-    @Published var lowHandle: SliderHandle
-    
-    //Handle start percentage (also for starting point)
-    @SliderValue var highHandleStartPercentage = 1.0
-    @SliderValue var lowHandleStartPercentage = 0.0
-    
-    final var anyCancellableHigh: AnyCancellable?
-    final var anyCancellableLow: AnyCancellable?
-    
-    init(start: Double, end: Double) {
-        valueStart = start
-        valueEnd = end
-        
-        highHandle = SliderHandle(sliderWidth: width,
-                                  sliderHeight: lineWidth,
-                                  sliderValueStart: valueStart,
-                                  sliderValueEnd: valueEnd,
-                                  startPercentage: _highHandleStartPercentage
-        )
-        
-        lowHandle = SliderHandle(sliderWidth: width,
-                                 sliderHeight: lineWidth,
-                                 sliderValueStart: valueStart,
-                                 sliderValueEnd: valueEnd,
-                                 startPercentage: _lowHandleStartPercentage
-        )
-        
-        anyCancellableHigh = highHandle.objectWillChange.sink { _ in
-            self.objectWillChange.send()
-        }
-        anyCancellableLow = lowHandle.objectWillChange.sink { _ in
-            self.objectWillChange.send()
-        }
-    }
-    
-    //Percentages between high and low handle
-    var percentagesBetween: String {
-        return String(format: "%.2f", highHandle.currentPercentage.wrappedValue - lowHandle.currentPercentage.wrappedValue)
-    }
-    
-    //Value between high and low handle
-    var valueBetween: String {
-        return String(format: "%.2f", highHandle.currentValue - lowHandle.currentValue)
-    }
-}
-
-
-struct SliderView: View {
-    @ObservedObject var slider: CustomSlider
-    
-    var body: some View {
-        RoundedRectangle(cornerRadius: slider.lineWidth)
-            .fill(Color.gray.opacity(0.2))
-            .frame(width: slider.width, height: slider.lineWidth)
-            .overlay(
-                ZStack {
-                    //Path between both handles
-                    SliderPathBetweenView(slider: slider)
-                    
-                    //Low Handle
-                    SliderHandleView(handle: slider.lowHandle)
-                        .highPriorityGesture(slider.lowHandle.sliderDragGesture)
-                    
-                    //High Handle
-                    SliderHandleView(handle: slider.highHandle)
-                        .highPriorityGesture(slider.highHandle.sliderDragGesture)
-                }
-            )
-    }
-}
-
-struct SliderHandleView: View {
-    @ObservedObject var handle: SliderHandle
-    
-    var body: some View {
-        Circle()
-            .frame(width: handle.diameter, height: handle.diameter)
-            .foregroundColor(.white)
-            .shadow(color: Color.black.opacity(0.15), radius: 8, x: 0, y: 0)
-            .scaleEffect(handle.onDrag ? 1.3 : 1)
-            .contentShape(Rectangle())
-            .position(x: handle.currentLocation.x, y: handle.currentLocation.y)
-    }
-}
-
-struct SliderPathBetweenView: View {
-    @ObservedObject var slider: CustomSlider
-    
-    var body: some View {
-        Path { path in
-            path.move(to: slider.lowHandle.currentLocation)
-            path.addLine(to: slider.highHandle.currentLocation)
-        }
-        .stroke(Color("Green"), lineWidth: slider.lineWidth)
-    }
-}
-
