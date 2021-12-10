@@ -26,4 +26,16 @@ struct Constants {
         static let white = (Color.white, "White")
         static let yellow = (Color.yellow, "Yellow")
     }
+    
+    struct APIKeys {
+        static let autoRiaAPI = "cXVCdZeOo2uYeYyunKBEGFiqootf7wOlBYdi9eYd"
+    }
+    
+    struct Endpoints {
+        static let carsAPI = "https://private-anon-aae480db7d-carsapi1.apiary-mock.com/cars"
+        static let lebonCoin = "https://leboncoin1.p.rapidapi.com/api/v1/leboncoin/search_api"
+        static let mobileDe = "https://services.mobile.de/search-api/ad/{ad-key}"
+        static let autoRia = "https://developers.ria.com/auto/search?api_key=\(APIKeys.autoRiaAPI)&bodystyle=2&bodystyle=3&bodystyle=4&price_ot=1000&price_do=60000&with_photo=1&countpage=30"//50"
+        static let autoRiaSingle = "https://developers.ria.com/auto/info?api_key=\(APIKeys.autoRiaAPI)&auto_id="
+    }
 }
