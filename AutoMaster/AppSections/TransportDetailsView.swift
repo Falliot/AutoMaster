@@ -36,7 +36,7 @@ struct TransportDetailsView: View {
                             
                         }
                         Spacer()
-                        //                    Text(transport.manufacturer + " " + transport.model)
+                        //                    Text(transport.maker + " " + transport.model)
                         Text("Details")
                             .font(.system(size: 23, weight: .bold, design: .rounded))
                             .foregroundColor(.white)

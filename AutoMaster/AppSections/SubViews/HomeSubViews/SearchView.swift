@@ -182,6 +182,7 @@ struct SearchView: View {
                     }
 
                     //MARK: - Fuel
+                    Group {
                     Title(title: "Fuel")
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack {
@@ -212,7 +213,7 @@ struct SearchView: View {
                     .background(.white)
                     .cornerRadius(25)
                     .padding([.horizontal, .bottom], 15)
-
+                    }
                     //MARK: - Variant Fuel
                     //                ScrollView(.horizontal, showsIndicators: false) {
                     //                    Picker("Fuel", selection: $selectedFuel) {
@@ -261,6 +262,18 @@ struct SearchView: View {
                     .background(.white)
                     .cornerRadius(25)
                     .padding(.horizontal, 15)
+                    
+                    //MARK: - Search Button
+                    
+                    Button {
+                        
+                    } label : {
+                        Text("Search")
+                            .font(.system(size: 18, weight: .semibold, design: .rounded))
+                            .frame(maxWidth: .infinity)
+                            .background(Color("Green"))
+                    }
+                   
                 }
             }
         }
