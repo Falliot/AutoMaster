@@ -7,6 +7,7 @@
 
 import Alamofire
 import SwiftUI
+import SwiftUIX
 
 class HomeViewModel: ObservableObject {
     
@@ -15,16 +16,6 @@ class HomeViewModel: ObservableObject {
     
     @Published var manufacturerModel: [ManufacturerModel] = []
     @Published var carModel: [TransportModel] = []
-    
-    @Published var transport: [Transport] =
-    [
-        Transport(manufacturer: "Opel", model: "Corsa", price: "1,000$", mileage: "54.300 km", year: "2001", fuel: .gasoline, transmission: "Manual", location: "Gliwice", image: "opel", icon: "opelIcon"),
-        //        Transport(maker: "Mazda", model: "6", price: "3,600$", mileage: "154.300 km", year: "2009", fuel: .gasoline, transmission: "Auto", location: "Krakow", image: "mazda", icon: ""),
-        Transport(manufacturer: "Audi", model: "A6", price: "3,000$", mileage: "104.300 km", year: "1998", fuel: .gasoline, transmission: "Manual", location: "Gliwice", image: "audi", icon: ""),
-        Transport(manufacturer: "Fiat", model: "Panda", price: "600$", mileage: "234.300 km", year: "2004", fuel: .gasoline, transmission: "Manual", location: "Gliwice", image: "fiat", icon: ""),
-        Transport(manufacturer: "Tesla", model: "Model 3", price: "45,700$", mileage: "24.300 km", year: "2019", fuel: .electric, transmission: "Manual", location: "Gliwice", image: "tesla", icon: "teslaIcon"),
-        Transport(manufacturer: "Ford", model: "Mustang", price: "21,000$", mileage: "54.300 km", year: "2001", fuel: .gasoline, transmission: "Manual", location: "Gliwice", image: "ford", icon: "fordIcon"),
-    ]
     
     func request() {
         AF.request("https://private-anon-30d4671a7c-carsapi1.apiary-mock.com/manufacturers")
@@ -87,7 +78,7 @@ class HomeViewModel: ObservableObject {
                     print(response.debugDescription)
                     return
                 }
-                
+//                print(car.prettyPrintedJSONString)
                 let decoder = JSONDecoder()
                 decoder.userInfo[CodingUserInfoKey(rawValue: "site")!] = TransportModel.Site.autoria
                 do {
@@ -99,5 +90,14 @@ class HomeViewModel: ObservableObject {
                     print(error)
                 }
             }
+    }
+}
+extension Data {
+    var prettyPrintedJSONString: NSString? { /// NSString gives us a nice sanitized debugDescription
+        guard let object = try? JSONSerialization.jsonObject(with: self, options: []),
+              let data = try? JSONSerialization.data(withJSONObject: object, options: [.prettyPrinted]),
+              let prettyPrintedString = NSString(data: data, encoding: String.Encoding.utf8.rawValue) else { return nil }
+
+        return prettyPrintedString
     }
 }

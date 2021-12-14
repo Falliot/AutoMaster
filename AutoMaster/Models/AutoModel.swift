@@ -7,48 +7,6 @@
 
 import UIKit
 
-struct AutoModel {
-    let maker: String
-    let model: String
-    let price: String
-    
-    
-    // seller ?
-//    let seller: String
-    // Basic Data
-    let bodyType: BodyType
-    let condition: AutoCondition
-    let numberOfSeats: Int
-    let doorCount: Int
-    
-    // Vehicle History
-    let mileage: String
-    let firstRegistration: String
-    let nonSmokerCar: Bool
-    let previousOwnerCount: Int
-    
-    // change to date
-    let generalInspection: String
-    let recentTechnicalService: String
-    
-    // Technical Data
-    let power: String
-    let transmission: Transmission
-    let engineSize: String
-    let gears: String
-    let cylinder: String
-    let kerbWeight: String
-    
-//    Energy Consumption
-    let fuelType: FuelType
-    let fuelConsumption: String
-//    let CO2Emission: String
-    let equipment: Equipment
-    let colorAbdUpholstery: ColorAndUpholstery // probably find a better naming
-    
-    let description: String
-}
-
 //MARK: - TransportModel
 struct TransportModel: Decodable, Identifiable, Hashable {
     
@@ -65,15 +23,33 @@ struct TransportModel: Decodable, Identifiable, Hashable {
     var transmission: String?
     var location: String?
     var image: String?
-    var icon: String?
+    var images: [Int]?
     
     //MARK: - AutoRia Specific
     var title: String?
+    var driveName: String?
     var linkToView: String?
+    var subCategoryName: String?
     var description: String?
-    
-    // practice
+
     var userPhone: String?
+    
+    var colorName: String?
+    var engColorName: String?
+    var hexColorName: String?
+    
+    
+    var icon: String {
+        switch maker {
+        case "hello", "Hello":
+            return "1"
+        case .none:
+         return    ""
+        case .some(_):
+            return    ""
+        }
+    }
+    
     
     enum Site {
         case carAPI
@@ -105,7 +81,9 @@ struct TransportModel: Decodable, Identifiable, Hashable {
         case maker = "markName"
         case model = "modelName"
         case photoData
+        case color
         case linkToView
+        case subCategoryName
         case title
     }
     
@@ -120,17 +98,23 @@ struct TransportModel: Decodable, Identifiable, Hashable {
         case race
         case fuelName
         case gearboxName
+        case driveName
+    }
+    
+    enum AutoRiaColorDataKeys: String, CodingKey {
+        case name
+        case eng
+        case hex
     }
     
     enum AutoRiaPhotoDataKeys: String, CodingKey {
+        case all
         case seoLinkM
         case seoLinkSX
         case seoLinkB
         case seoLinkF
     }
-    
-    
-    
+
     init(from decoder: Decoder) throws {
         
         guard let key = CodingUserInfoKey(rawValue: "site"),
@@ -154,26 +138,35 @@ struct TransportModel: Decodable, Identifiable, Hashable {
         case .autoria:
             
         let container = try decoder.container(keyedBy: SiteAutoRiaCodingKeys.self)
-        location = try container.decode(String.self, forKey: .locationCityName)
-        price = try container.decode(Int.self, forKey: .price)
-        maker = try container.decode(String.self, forKey: .maker)
-        model = try container.decode(String.self, forKey: .model)
-        linkToView = try container.decode(String.self, forKey: .linkToView)
-        title = try container.decode(String.self, forKey: .title)
+        location = try container.decodeIfPresent(String.self, forKey: .locationCityName) ?? "Unknown"
+        price = try container.decodeIfPresent(Int.self, forKey: .price) ?? 0
+        maker = try container.decodeIfPresent(String.self, forKey: .maker) ?? "Unknown"
+        model = try container.decodeIfPresent(String.self, forKey: .model) ?? "Unknown"
+        linkToView = try container.decodeIfPresent(String.self, forKey: .linkToView) ?? "None"
+        subCategoryName = try container.decodeIfPresent(String.self, forKey: .subCategoryName) ?? "Unknown"
+        title = try container.decodeIfPresent(String.self, forKey: .title) ?? "Unknown"
         
         let autoDataContainer = try container.nestedContainer(keyedBy: AutoRiaAutoDataKeys.self, forKey: .autoData)
-        description = try autoDataContainer.decode(String.self, forKey: .description)
-        id =  try autoDataContainer.decode(Int.self, forKey: .autoId)
-        year =  try autoDataContainer.decode(Int.self, forKey: .year)
-        mileage =  try autoDataContainer.decode(String.self, forKey: .race)
-        fuel =  try autoDataContainer.decode(String.self, forKey: .fuelName)
-        transmission =  try autoDataContainer.decode(String.self, forKey: .gearboxName)
+        description = try autoDataContainer.decodeIfPresent(String.self, forKey: .description) ?? "No details"
+        id =  try autoDataContainer.decodeIfPresent(Int.self, forKey: .autoId) ?? 0
+        year =  try autoDataContainer.decodeIfPresent(Int.self, forKey: .year) ?? 0
+        mileage =  try autoDataContainer.decodeIfPresent(String.self, forKey: .race) ?? "Unknown"
+        fuel =  try autoDataContainer.decodeIfPresent(String.self, forKey: .fuelName) ?? "Unknown"
+        transmission =  try autoDataContainer.decodeIfPresent(String.self, forKey: .gearboxName) ?? "Unknown"
+        driveName = try autoDataContainer.decodeIfPresent(String.self, forKey: .driveName) ?? "Unknown"
+            
+        let colorDataContainer = try container.nestedContainer(keyedBy: AutoRiaColorDataKeys.self, forKey: .color)
+        colorName = try colorDataContainer.decodeIfPresent(String.self, forKey: .name) ?? "Unknown"
+        engColorName = try colorDataContainer.decodeIfPresent(String.self, forKey: .eng) ?? "Unknown"
+        hexColorName = try colorDataContainer.decodeIfPresent(String.self, forKey: .hex) ?? "Unknown"
+            
         
         let userPhoneDataContainer = try container.nestedContainer(keyedBy: AutoRiaPhoneDataKeys.self, forKey: .userPhoneData)
-        userPhone = try userPhoneDataContainer.decode(String.self, forKey: .phone)
+        userPhone = try userPhoneDataContainer.decodeIfPresent(String.self, forKey: .phone) ?? "Unknown"
         
         let autoPhotoDataContainer = try container.nestedContainer(keyedBy: AutoRiaPhotoDataKeys.self, forKey: .photoData)
-        image = try autoPhotoDataContainer.decode(String.self, forKey: .seoLinkB)
+        image = try autoPhotoDataContainer.decodeIfPresent(String.self, forKey: .seoLinkB) ?? "Unknown"
+        images = try autoPhotoDataContainer.decodeIfPresent([Int].self, forKey: .all) ?? []
             
         }
 //        case .olx:
@@ -185,6 +178,21 @@ struct TransportModel: Decodable, Identifiable, Hashable {
 }
 
 
+//MARK: - Cars Photos
+struct AutoRiaPhotoData: Decodable {
+    let formats: [String]
+}
+    
+struct AutoRiaCarIdPhotoResponse: Decodable {
+    let photos: [String:[String: AutoRiaPhotoData]]
+    
+    private enum CodingKeys: String, CodingKey {
+        case photos = "data"
+    }
+}
+//cXVCdZeOo2uYeYyunKBEGFiqootf7wOlBYdi9eYd
+
+//MARK: - Cars Ids
 struct AutoRiaData: Decodable, Hashable {
     var ids: [String]
 
@@ -209,16 +217,5 @@ struct AutoRiaData: Decodable, Hashable {
     }
 }
 
-struct Transport: Identifiable, Hashable {
-    var id = UUID().uuidString
-    var manufacturer: String
-    var model: String
-    var price: String
-    var mileage: String
-    var year: String
-    var fuel: FuelType
-    var transmission: String
-    var location: String
-    var image: String
-    var icon: String
-}
+// chrysler honda mercedes-benz ram ford gmc audi subaru rolls-royce porsche bmw volvo lincoln maserati acura mclaren infiniti fiat scion dodge bentley aston-martin chevrolet land-rover mitsubishi volkswagen toyota jeep hyundai cadillac lamborghini lexus alfa-romeo mini kia ferrari mazda nissan buick jaguar
+//"Audi" "Chevrolet" "Cadillac" "Acura" "BMW" "Chrysler" "Ford" "Buick" "INFINITI" "GMC" "Honda" "Hyundai" "Jeep" "Genesis" "Dodge" "Jaguar" "Kia" "Land Rover" "Lexus" "Mercedes-Be" "Mitsubishi" "Lincoln" "MAZDA" "Nissan" "MINI" "Porsche" "Ram" "Subaru" "Toyota" "Volkswagen" "Volvo" "Alfa Romeo" "FIAT" "Freightline" "Maserati" "Tesla" "Aston Marti" "Bentley" "Ferrari" "Lamborghini" "Lotus" "McLaren" "Rolls-Royce" "smart" "Scion" "SRT" "Suzuki" "Fisker" "Maybach" "Mercury" "Saab" "HUMMER" "Pontiac" "Saturn" "Isuzu" "Panoz" "Oldsmobile" "Daewoo" "Plymouth" "Eagle" "Geo" "Daihatsu"

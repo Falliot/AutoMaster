@@ -21,10 +21,10 @@ struct ManufacturerModel: Codable, Identifiable, Hashable {
 //    }
     
     var name: String
-    var image: ManufacturerImage
+//    var image: ManufacturerImage
     var id: String { name }
 }
-
-struct ManufacturerImage: Codable, Hashable {
-    var optimized: String
-}
+//
+//struct ManufacturerImage: Codable, Hashable {
+//    var optimized: String
+//}
