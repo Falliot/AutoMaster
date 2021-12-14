@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0972B6BC27690FEA004C4C6E /* TransportViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0972B6BB27690FEA004C4C6E /* TransportViewModel.swift */; };
 		098661F927589FEF00D5B566 /* TransportDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098661F827589FEF00D5B566 /* TransportDetailsView.swift */; };
 		09951101275A28ED00C8C641 /* SharedDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09951100275A28ED00C8C641 /* SharedDataModel.swift */; };
 		099E8E7127579A39006F41F1 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099E8E7027579A39006F41F1 /* ViewExtensions.swift */; };
@@ -38,6 +39,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0972B6BB27690FEA004C4C6E /* TransportViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransportViewModel.swift; sourceTree = "<group>"; };
 		098661F827589FEF00D5B566 /* TransportDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransportDetailsView.swift; sourceTree = "<group>"; };
 		09951100275A28ED00C8C641 /* SharedDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDataModel.swift; sourceTree = "<group>"; };
 		099E8E7027579A39006F41F1 /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 				3A1ABDA32738290500554C4A /* MenuViewModel.swift */,
 				09951100275A28ED00C8C641 /* SharedDataModel.swift */,
 				09C9283B275E1F6200883C9C /* SearchViewModel.swift */,
+				0972B6BB27690FEA004C4C6E /* TransportViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -444,6 +447,7 @@
 				099E8E7127579A39006F41F1 /* ViewExtensions.swift in Sources */,
 				3A1ABD922738280F00554C4A /* HomeView.swift in Sources */,
 				3A1ABD942738281A00554C4A /* SavedSearchView.swift in Sources */,
+				0972B6BC27690FEA004C4C6E /* TransportViewModel.swift in Sources */,
 				3A82E8912745882C00BCB859 /* Enums.swift in Sources */,
 				3A1ABD8D273814BA00554C4A /* Constants.swift in Sources */,
 			);
