@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
-import SwiftUIX
+import SDWebImageSwiftUI
 
 struct TransportDetailsView: View {
     var animation: Namespace.ID
-    var transport: Transport
+    var transport: TransportModel
     
+    @StateObject var viewModel: TransportViewModel = TransportViewModel()
     @EnvironmentObject var sharedData: SharedDataModel
     
     @State private var showingPopover = false
@@ -36,7 +37,6 @@ struct TransportDetailsView: View {
                             
                         }
                         Spacer()
-                        //                    Text(transport.maker + " " + transport.model)
                         Text("Details")
                             .font(.system(size: 23, weight: .bold, design: .rounded))
                             .foregroundColor(.white)
@@ -60,24 +60,25 @@ struct TransportDetailsView: View {
                 //MARK: - ScrollView
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack {
-                        TabView {
-                            ForEach(sharedData.opelIcons, id: \.self) { icon in
-                                Image(icon)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
+                        if !viewModel.carPhotos.isEmpty {
+                            TabView {
+                                ForEach(viewModel.carPhotos, id: \.self) { icon in
+                                    WebImage(url: URL(string: icon))
+                                        .resizable()
+                                        .placeholder(Image(systemName: "photo"))
+                                        .placeholder {
+                                            Rectangle().foregroundColor(.white)
+                                        }
+                                        .indicator(.activity)
+                                        .transition(.fade(duration: 0.5))
+                                        .aspectRatio(contentMode: .fit)
+                                }
                             }
+                            .matchedGeometryEffect(id: "\(transport.id)IMAGE", in: animation)
+                            .frame(width: getRect().width, height: getRect().width * 0.75)
+                            .tabViewStyle(.page)
+                            .padding(.bottom, 40)
                         }
-                        .matchedGeometryEffect(id: "\(transport.id)IMAGE", in: animation)
-                        .frame(width: getRect().width, height: getRect().width * 0.75)
-                        .tabViewStyle(.page)
-                        .padding(.bottom, 40)
-                        
-//                        Image("opelImg")//transport.image)
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .matchedGeometryEffect(id: "\(transport.id)IMAGE", in: animation)
-//                            .frame(maxHeight: .infinity)
-//                            .padding(.bottom, 40)
                         
                         //MARK: - Like and Icon
                         ZStack(alignment: .top) {
@@ -117,11 +118,11 @@ struct TransportDetailsView: View {
                             //MARK: - Transport Data
                             VStack(alignment: .center, spacing: 15) {
                                 HStack {
-                                    Text(transport.manufacturer + " " + transport.model)
+                                    Text(transport.title!)
                                         .font(.system(size: 22, weight: .medium, design: .rounded))
                                     
                                     Spacer()
-                                    Text(transport.price)
+                                    Text(String(transport.price!) + " $")
                                         .font(.system(size: 18, weight: .semibold, design: .rounded))
                                 }
                                 .padding(.top, 40)
@@ -129,12 +130,12 @@ struct TransportDetailsView: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 
                                 Group {
-                                    DetailsField(icon: "calendar", "Year", transport.year)
-                                    DetailsField(icon: "speed", "Mileage", transport.mileage)
-                                    DetailsField(icon: "gearbox", "Transmission", transport.transmission)
-                                    DetailsField(icon: transport.fuel == .gasoline ? "gas" : "battery", "Fuel", transport.fuel.rawValue)
+                                    DetailsField(icon: "calendar", "Year", String(transport.year!))
+                                    DetailsField(icon: "speed", "Mileage", transport.mileage!)
+                                    DetailsField(icon: "gearbox", "Transmission", transport.transmission!)
+                                    DetailsField(icon: "gas" , "Fuel", transport.fuel!)
                                     DetailsField(icon: "menu", "Seller", "Dealer")
-                                    DetailsField(icon: "carLocation", "Location", transport.location)
+                                    DetailsField(icon: "carLocation", "Location", transport.location!)
                                 }
                                 .padding(.horizontal, 5)
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -147,15 +148,15 @@ struct TransportDetailsView: View {
                                 
                                 SingkeNavigationLink(title: "Technical data", icon: "wrench", popOverType: .technical)
                                 
-                                DetailsNavigationLink(title: "Basic data", icon: "carSearch", firstInfo: "Body type", secondInfo: "Coupe", thirdInfo: "Condition", forthInfo: "Used", navigation: true, popOverType: .basic)
+                                DetailsNavigationLink(title: "Basic data", icon: "carSearch", firstInfo: "Body type", secondInfo: transport.subCategoryName!, thirdInfo: "Condition", forthInfo: "Used", navigation: true, popOverType: .basic)
                                 
-                                DetailsNavigationLink(title: "Vehicle history", icon: "history", firstInfo: "Mileage", secondInfo: transport.mileage, thirdInfo: "First registration", forthInfo: transport.year)
+                                DetailsNavigationLink(title: "Vehicle history", icon: "history", firstInfo: "Mileage", secondInfo: transport.mileage!, thirdInfo: "First registration", forthInfo: String(transport.year!))
                                 
                                 SingkeNavigationLink(title: "Color", icon: "colorFill", popOverType: .color)
                                 
                                 SingkeNavigationLink(title: "Equipment", icon: "carSeat", popOverType: .equipment)
                                 
-                                DescriptionNavigationLink(title: "Vehicle description", icon: "clipboard", text: "Used car. Very good condition. All the documents are in place. Clean and nice. Not damadged, not painted", popOverType: .description)
+                                DescriptionNavigationLink(title: "Vehicle description", icon: "clipboard", text: transport.description!, popOverType: .description)
                             }
                             .padding([.horizontal, .bottom], 20)
                             .padding(.top, 20)
@@ -177,7 +178,9 @@ struct TransportDetailsView: View {
             )
             .zIndex(0)
         }
-        .print("\(popOver)")
+        .onAppear {
+            viewModel.autoRiaGetImages(carId: String(transport.id!))
+        }
     }
     
     @ViewBuilder
@@ -359,14 +362,14 @@ struct TransportDetailsView: View {
         case .technical:
             DetailPopOver(title: "Technical data", content: {
                 SinglePopOverInfo(infoTitle: "Power", infoDescription: "40 kW (54 hp)")
-                SinglePopOverInfo(infoTitle: "Transmission", infoDescription: transport.transmission)
-                SinglePopOverInfo(infoTitle: "Engine size", infoDescription: "973 cc")
+                SinglePopOverInfo(infoTitle: "Transmission", infoDescription: transport.transmission!)
+                SinglePopOverInfo(infoTitle: "Drive type", infoDescription: transport.driveName!)
                 SinglePopOverInfo(infoTitle: "Gears", infoDescription: "5")
             })
             
         case .basic:
             DetailPopOver(title: "Basic data", content: {
-                SinglePopOverInfo(infoTitle: "Body tyoe", infoDescription: "Compact")
+                SinglePopOverInfo(infoTitle: "Body tyoe", infoDescription: transport.subCategoryName!)
                 SinglePopOverInfo(infoTitle: "Condition", infoDescription: "Used")
                 SinglePopOverInfo(infoTitle: "Door count", infoDescription: "3")
                 SinglePopOverInfo(infoTitle: "Country version", infoDescription: "Germany")
@@ -389,14 +392,14 @@ struct TransportDetailsView: View {
             })
         case .color:
             DetailPopOver(title: "Color", content: {
-                SinglePopOverInfo(infoTitle: "Body colot", infoDescription: "Blue")
-                SinglePopOverInfo(infoTitle: "Manufacturer color", infoDescription: "blau")
+                SinglePopOverInfo(infoTitle: "Body color", infoDescription: transport.colorName!)
+                SinglePopOverInfo(infoTitle: "Manufacturer color", infoDescription: transport.engColorName!)
                 SinglePopOverInfo(infoTitle: "Interior color", infoDescription: "Other")
                 SinglePopOverInfo(infoTitle: "Interior fittings", infoDescription: "Cloth")
             })
         case .description:
             DetailPopOver(title: "Vehicle description", content: {
-                Text("Used car. Very good condition. All the documents are in place. Clean and nice. Not damadged, not painted")
+                Text(transport.description!)
                     .font(.system(size: 17, weight: .regular, design: .rounded))
             })
         case .none:
@@ -443,12 +446,5 @@ struct TransportDetailsView: View {
             .foregroundColor(Color("Green"))
             .padding(.vertical, 5)
             .padding(.horizontal, 0)
-    }
-}
-
-struct CarDetailsView_Previews: PreviewProvider {
-    static var previews: some View {
-        TransportDetailsView(animation: Namespace.init().wrappedValue, transport: HomeViewModel().transport[0])
-            .environmentObject(SharedDataModel())
     }
 }

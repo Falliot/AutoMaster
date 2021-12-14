@@ -77,7 +77,9 @@ struct HomeView: View {
             if !getVehicles {
                 getVehicles.toggle()
                 viewModel.autoRiaRequest()
-//                viewModel.carsRequest()
+                //                viewModel.request()
+                //                viewModel.carsRequest()
+                
             }
         }
     }
@@ -140,11 +142,11 @@ struct HomeView: View {
                 
                 VStack(alignment: .leading, spacing: 5) {
                     Group {
-                        DetailsInformation(icon: "speed", info: transport.mileage ?? "idk")
-                        DetailsInformation(icon: "calendar", info: String(transport.year ?? 0))
-                        DetailsInformation(icon: "gas", info: transport.fuel ?? "0")
-                        DetailsInformation(icon: "gearbox", info: transport.transmission ?? "idk")
-                        DetailsInformation(icon: "location", info: transport.location ?? "idk")
+                        DetailsInformation(icon: "speed", info: transport.mileage!)
+                        DetailsInformation(icon: "calendar", info: String(transport.year!))
+                        DetailsInformation(icon: "gas", info: transport.fuel!)
+                        DetailsInformation(icon: "gearbox", info: transport.transmission!)
+                        DetailsInformation(icon: "location", info: transport.location!)
                     }
                     .font(.system(size: 16, weight: .regular, design: .rounded))
                 }
@@ -154,9 +156,9 @@ struct HomeView: View {
             
             
             VStack(alignment: .leading) {
-                Text((transport.maker ?? "idk") + " " + (transport.model ?? "nil"))
+                Text(transport.title!)
                     .font(.system(size: 18, weight: .regular, design: .rounded))
-                Text(String(transport.price ?? 0) + "$")
+                Text(String(transport.price!) + " $")
                     .font(.system(size: 18, weight: .semibold, design: .rounded))
                     .foregroundColor(Color("Green"))
             }
@@ -171,7 +173,7 @@ struct HomeView: View {
         )
         .onTapGesture {
             withAnimation(.easeInOut) {
-//                                sharedData.detailTransport = transport
+                sharedData.detailTransport = transport
                 sharedData.showDetailTransport = true
             }
         }

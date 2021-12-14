@@ -37,5 +37,6 @@ struct Constants {
         static let mobileDe = "https://services.mobile.de/search-api/ad/{ad-key}"
         static let autoRia = "https://developers.ria.com/auto/search?api_key=\(APIKeys.autoRiaAPI)&bodystyle=2&bodystyle=3&bodystyle=4&price_ot=1000&price_do=60000&with_photo=1&countpage=30"//50"
         static let autoRiaSingle = "https://developers.ria.com/auto/info?api_key=\(APIKeys.autoRiaAPI)&auto_id="
+        static let autoRiaCarPhotos = "https://developers.ria.com/auto/fotos/"
     }
 }

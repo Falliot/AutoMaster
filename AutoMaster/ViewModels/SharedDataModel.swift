@@ -8,12 +8,15 @@
 import SwiftUI
 
 class SharedDataModel: ObservableObject {
-    @Published var detailTransport: Transport?
+    @Published var detailTransport: TransportModel?
     @Published var showDetailTransport: Bool = false
     
     var opelIcons = ["opelImg", "opelImg1", "opelImg2", "opelImg3", "opelImg4", "opelImg5"]
     
-    @Published var likedTransports: [Transport] = []
+    @Published var likedTransports: [TransportModel] = []
+    @Published var carIds: [Int] = []
+    
+    
     
     var isHidden: Bool = false {
         willSet {
@@ -21,13 +24,13 @@ class SharedDataModel: ObservableObject {
         }
     }
     
-    func isLiked(_ currentTransport: Transport) -> Bool {
+    func isLiked(_ currentTransport: TransportModel) -> Bool {
         return likedTransports.contains { transport in
             return currentTransport.id == transport.id
         }
     }
     
-    func addToLiked(_ currentTransport: Transport) {
+    func addToLiked(_ currentTransport: TransportModel) {
         if let index =  likedTransports.firstIndex(where: { transport in
             return currentTransport.id == transport.id
         }) {
@@ -37,7 +40,7 @@ class SharedDataModel: ObservableObject {
         }
     }
     
-    func deleteFavorite(_ currentTransport: Transport) {
+    func deleteFavorite(_ currentTransport: TransportModel) {
         if let index = likedTransports.firstIndex(where: { selectedTransport in
             return currentTransport.id == selectedTransport.id
         }) {

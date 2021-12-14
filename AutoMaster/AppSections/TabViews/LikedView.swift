@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct LikedView: View {
     @ObservedObject var viewModel = FavoritesViewModel()
@@ -96,11 +97,17 @@ struct LikedView: View {
     }
     
     @ViewBuilder
-    func CardView(transport: Transport) -> some View {
+    func CardView(transport: TransportModel) -> some View {
         HStack(spacing: 7) {
             //MARK: - right side(image)
-            Image(transport.image)
+            WebImage(url: URL(string: transport.image!))
                 .resizable()
+                .placeholder(Image(systemName: "photo"))
+                .placeholder {
+                    Rectangle().foregroundColor(.white)
+                }
+                .indicator(.activity)
+                .transition(.fade(duration: 0.5))
                 .aspectRatio(contentMode: .fill)
                 .frame(width: getRect().width * 0.33, height: getRect().width * 0.24, alignment: .leading)
                 .cornerRadius(25, corners: [.topLeft, .bottomLeft])
@@ -110,10 +117,10 @@ struct LikedView: View {
             VStack {
                 HStack {
                     VStack(alignment: .leading) {
-                        Text(transport.year)
+                        Text(String(transport.year ?? 0))
                             .font(.system(size: 15, weight: .regular, design: .rounded))
                             .foregroundColor(.gray)
-                        Text(transport.manufacturer)
+                        Text(transport.maker ?? " ")
                             .font(.system(size: 20, weight: .semibold, design: .rounded))
                             .padding(.bottom, 5)
                     }
@@ -132,9 +139,9 @@ struct LikedView: View {
                 
                 HStack(spacing: 5) {
                     Group {
-                        Text(transport.price)
-                        Text(transport.mileage)
-                        Text(transport.location)
+                        Text(String(transport.price  ?? 0) + " $")
+                        Text(transport.mileage ?? " ")
+                        Text(transport.location ?? " ")
                     }
                     .font(.system(size: 15, weight: .regular, design: .rounded))
                     .lineLimit(1)
