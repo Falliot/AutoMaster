@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Lotus.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
