@@ -86,8 +86,8 @@ struct TransportDetailsView: View {
                                 if transport.icon != "" {
                                     Image(transport.icon)
                                         .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 35, height: 35)
+                                        .frame(width: 50, height: 50)
+                                        .aspectRatio(contentMode: .fill)
                                         .offset(y: 5)
                                 } else {
                                     VStack(alignment: .center, spacing: 0) {
