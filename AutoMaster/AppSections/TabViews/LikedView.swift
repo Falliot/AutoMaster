@@ -44,13 +44,13 @@ struct LikedView: View {
                 VStack {
                     if sharedData.likedTransports.isEmpty {
                         Group {
-                            Image("favorites1")
+                            Image("noLiked")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .padding()
                                 .padding(.top, 35)
                             
-                            Text("No favorites yes")
+                            Text("No favorites yet")
                                 .font(.system(size: 25, weight: .semibold, design: .rounded))
                                 .foregroundColor(Color("Green"))
                             

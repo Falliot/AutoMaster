@@ -81,6 +81,7 @@ struct SearchView: View {
             .background(Color("Green"))
             //            .padding(.bottom, 10)
             
+            ZStack(alignment: .bottom) {
             //MARK: - Main ScrollView
             ScrollView(.vertical, showsIndicators: false) {
                 VStack {
@@ -263,18 +264,21 @@ struct SearchView: View {
                     .cornerRadius(25)
                     .padding(.horizontal, 15)
                     
-                    //MARK: - Search Button
-                    
-                    Button {
-                        
-                    } label : {
-                        Text("Search")
-                            .font(.system(size: 18, weight: .semibold, design: .rounded))
-                            .frame(maxWidth: .infinity)
-                            .background(Color("Green"))
-                    }
-                   
                 }
+            }
+                
+                //MARK: - Search Button
+                Button {
+                    
+                } label : {
+                    Text("Search")
+                        .font(.system(size: 18, weight: .semibold, design: .rounded))
+                        .foregroundColor(.white)
+                }
+                .padding(.horizontal, 60)
+                .padding(10)
+                .background(Color("Green"))
+                .cornerRadius(25)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
