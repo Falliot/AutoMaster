@@ -14,6 +14,7 @@ class SharedDataModel: ObservableObject {
     var opelIcons = ["opelImg", "opelImg1", "opelImg2", "opelImg3", "opelImg4", "opelImg5"]
     
     @Published var likedTransports: [TransportModel] = []
+    @Published var likedSearches: [SavedSearch] = []
     @Published var carIds: [Int] = []
     
     
@@ -23,6 +24,9 @@ class SharedDataModel: ObservableObject {
             objectWillChange.send()
         }
     }
+    
+    // TODO: FIX TO GENERICS for both liked transports and search
+    
     
     func isLiked(_ currentTransport: TransportModel) -> Bool {
         return likedTransports.contains { transport in

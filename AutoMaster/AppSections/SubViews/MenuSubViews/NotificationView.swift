@@ -60,7 +60,6 @@ struct NotificationView: View {
                     Text("Saved Searches")
                         .font(.system(size: 17, weight: .semibold, design: .rounded))
                 }
-                
                 .padding()
                 
                 Toggle(isOn: $favoriteTransport) {

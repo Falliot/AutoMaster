@@ -20,6 +20,9 @@ struct SearchView: View {
     
     @State private var selectedTransmission = Transmission.manual
     @State private var selectedFuel = FuelType.gasoline
+    @State private var manufacturer: String = ""
+    
+    @State private var isPresented = false
     
     let columns = [
         GridItem(.flexible()),
@@ -36,7 +39,6 @@ struct SearchView: View {
     
     init() {
         UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(named: "Green")
-        //        UISegmentedControl.appearance().backgroundColor = .purple
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor : UIColor.white], for: .selected)
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor : UIColor.black], for: .normal)
     }
@@ -82,201 +84,215 @@ struct SearchView: View {
             //            .padding(.bottom, 10)
             
             ZStack(alignment: .bottom) {
-            //MARK: - Main ScrollView
-            ScrollView(.vertical, showsIndicators: false) {
-                VStack {
-                    //MARK: - Manufacturer Grid
-                    Title(title: "Make and Model")
-                        .padding(.top, 10)
-                    VStack(spacing: 0) {
-                        LazyVGrid(columns: columns, alignment: .center, spacing: 20) {
-                            ForEach(searchViewModel.maker) { maker in
-                                Button {
-                                    
-                                } label: {
-                                    VStack(spacing: 5) {
-                                        Image(maker.image)
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 35, height: 35)
-                                        Text(maker.make)
-                                            .font(.system(size: 15, weight: .regular, design: .rounded))
-                                            .foregroundColor(.black)
+                //MARK: - Main ScrollView
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack {
+                        //MARK: - Manufacturer Grid
+                        Title(title: "Make and Model")
+                            .padding(.top, 10)
+                        VStack(spacing: 0) {
+                            LazyVGrid(columns: columns, alignment: .center, spacing: 20) {
+                                ForEach(searchViewModel.maker) { maker in
+                                    Button {
+                                        homeViewModel.manufacturer = "&marka_id[0]=\(maker.index)"
+                                        manufacturer = maker.make
+                                    } label: {
+                                        VStack(spacing: 5) {
+                                            Image(maker.image)
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 35, height: 35)
+                                            Text(maker.make)
+                                                .font(.system(size: 15, weight: .regular, design: .rounded))
+                                                .foregroundColor(.black)
+                                        }
                                     }
                                 }
                             }
-                        }
-                        .padding()
-                        .frame(maxHeight: 180)
-                        
-                        Divider()
-                        
-                        Button { } label: {
-                            Text("+ Show all makes")
-                                .font(.system(size: 16, weight: .bold, design: .rounded))
-                                .foregroundColor(.white)
-                                .frame(maxWidth: .infinity)
-                                .padding(10)
-                                .background(Color("Green"))
-                                .cornerRadius(25, corners: [.bottomLeft, .bottomRight])
-                        }
-                    }
-                    .background(
-                        Color.white.cornerRadius(25)
-                    )
-                    .padding([.horizontal, .bottom], 15)
-                    
-                    //MARK: - Body type
-                    Title(title: "Body type")
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 15) {
-                            ForEach(0 ..< searchViewModel.bodyType.count) { index in
-                                let bodyType = searchViewModel.bodyType[index]
-                                Button {
-                                    bodyType.isSelected.toggle()
-                                    searchViewModel.selectedBodyTypes.append(bodyType)
-                                } label: {
-                                    VStack(spacing: 0) {
-                                        Image(searchViewModel.bodyType[index].image)
-                                            .resizable()
-                                            .renderingMode(.template)
-                                            .aspectRatio(contentMode: .fit)
-                                            .foregroundColor(bodyType.isSelected ? .white : .black)
-                                            .frame(width: 75, height: 50)
-                                        Text(searchViewModel.bodyType[index].make)
-                                            .font(.system(size: 13, weight: .regular, design: .rounded))
-                                            .foregroundColor(bodyType.isSelected ? .white : .black)
-                                            .padding(.bottom, 5)
-                                    }
-                                }
-                                .background(bodyType.isSelected ? Color("Green") : .white)
-                                .cornerRadius(10)
-                                
+                            .padding()
+                            .frame(maxHeight: 180)
+                            
+                            Divider()
+                            
+                            Button { } label: {
+                                Text("+ Show all makes")
+                                    .font(.system(size: 16, weight: .bold, design: .rounded))
+                                    .foregroundColor(.white)
+                                    .frame(maxWidth: .infinity)
+                                    .padding(10)
+                                    .background(Color("Green"))
+                                    .cornerRadius(25, corners: [.bottomLeft, .bottomRight])
                             }
                         }
-                        .padding(.horizontal)
-                    }
-                    .frame(height: 100)
-                    .background(.white)
-                    .cornerRadius(25)
-                    .padding([.horizontal, .bottom], 15)
-                    
-                    
-                    
-                    //MARK: - Sliders
-                    Group {
-                        TitleWithSlider(title: "Price ($)", slider: priceSlider)
-                        TitleWithSlider(title: "Year", slider: yearSlider)
-                        TitleWithSlider(title: "KM", slider: milleageSlider)
-                    }
-                    
-                    //MARK: - Transmission
-                    Group {
-                        Title(title: "Transmission")
-                        Picker("Transmission", selection: $selectedTransmission) {
-                            ForEach(Transmission.allCases) { transmission in
-                                Text(transmission.id).tag(transmission)
-                            }
-                        }
-                        .pickerStyle(.segmented)
+                        .background(
+                            Color.white.cornerRadius(25)
+                        )
                         .padding([.horizontal, .bottom], 15)
-                    }
-
-                    //MARK: - Fuel
-                    Group {
-                    Title(title: "Fuel")
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack {
-                            ForEach(FuelType.allCases) { fuel in
-                                let isSelected = searchViewModel.selectedFuelTypes.contains(fuel)
-                                Button {
-                                    if isSelected {
-                                        searchViewModel.selectedFuelTypes.removeAll { object in
-                                            object == fuel
+                        
+                        //MARK: - Body type
+                        Title(title: "Body type")
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 15) {
+                                ForEach(0 ..< searchViewModel.bodyType.count) { index in
+                                    let bodyType = searchViewModel.bodyType[index]
+                                    Button {
+                                        bodyType.isSelected.toggle()
+                                        homeViewModel.bodyTypes.append("&bodystyle[\(homeViewModel.bodyTypes.count)]=\(bodyType.index)")
+                                        searchViewModel.selectedBodyTypes.append(bodyType)
+                                    } label: {
+                                        VStack(spacing: 0) {
+                                            Image(searchViewModel.bodyType[index].image)
+                                                .resizable()
+                                                .renderingMode(.template)
+                                                .aspectRatio(contentMode: .fit)
+                                                .foregroundColor(bodyType.isSelected ? .white : .black)
+                                                .frame(width: 75, height: 50)
+                                            Text(searchViewModel.bodyType[index].make)
+                                                .font(.system(size: 13, weight: .regular, design: .rounded))
+                                                .foregroundColor(bodyType.isSelected ? .white : .black)
+                                                .padding(.bottom, 5)
                                         }
-                                    } else {
-                                        searchViewModel.selectedFuelTypes.append(fuel)
                                     }
-                                } label: {
-                                    Text(fuel.id)
-                                        .font(.system(size: 15, weight: .regular, design: .rounded))
-                                        .foregroundColor(isSelected ? .white : .black)
-                                        .padding(5)
-                                }
-
-                                .background(isSelected ? Color("Green") : .white)
-                                .cornerRadius(10)
-                            }
-                        }
-                        .padding(.horizontal)
-                    }
-                    .frame(height: 70)
-                    .background(.white)
-                    .cornerRadius(25)
-                    .padding([.horizontal, .bottom], 15)
-                    }
-                    //MARK: - Variant Fuel
-                    //                ScrollView(.horizontal, showsIndicators: false) {
-                    //                    Picker("Fuel", selection: $selectedFuel) {
-                    //                        ForEach(FuelType.allCases) { fuel in
-                    //                            Text(fuel.id).tag(fuel)
-                    //                        }
-                    //                    }
-                    //                    .pickerStyle(.segmented)
-                    //                }
-                    //                .padding([.horizontal, .bottom], 15)
-
-
-                    //MARK: - Color
-                    Title(title: "Color")
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        LazyHGrid(rows: colorRows, alignment: .center, spacing: 15) {
-                            ForEach(InteriorColor.allCases) { color in
-                                let isSelected = searchViewModel.selectedColors.contains(color)
-                                Button {
-                                    if isSelected {
-                                        searchViewModel.selectedColors.removeAll { object in
-                                            object == color
-                                        }
-                                    } else {
-                                        searchViewModel.selectedColors.append(color)
-                                    }
-                                } label: {
-                                    VStack(spacing: 5) {
-                                        color.color
-                                            .frame(width: 25, height: 25)
-                                            .clipShape(Circle())
-
-                                        Text(color.id)
-                                            .font(.system(size: 15, weight: .regular, design: .rounded))
-                                            .foregroundColor(isSelected ? .white : .black)
-                                    }
-                                    .frame(width: 75, height: 75)
-                                    .background(isSelected ? Color("Green") : .white)
+                                    .background(bodyType.isSelected ? Color("Green") : .white)
                                     .cornerRadius(10)
+                                    
                                 }
                             }
+                            .padding(.horizontal)
                         }
-                        .padding(.horizontal)
+                        .frame(height: 100)
+                        .background(.white)
+                        .cornerRadius(25)
+                        .padding([.horizontal, .bottom], 15)
+                        
+                        
+                        
+                        //MARK: - Sliders
+                        Group {
+                            TitleWithSlider(title: "Price ($)", slider: priceSlider)
+                            TitleWithSlider(title: "Year", slider: yearSlider)
+                            TitleWithSlider(title: "KM", slider: milleageSlider)
+                        }
+                        
+                        //MARK: - Transmission
+                        Group {
+                            Title(title: "Transmission")
+                            Picker("Transmission", selection: $selectedTransmission) {
+                                ForEach(Transmission.allCases) { transmission in
+                                    Text(transmission.id).tag(transmission)
+                                }
+                            }
+                            .pickerStyle(.segmented)
+                            .padding([.horizontal, .bottom], 15)
+                        }
+                        
+                        //MARK: - Fuel
+                        Group {
+                            Title(title: "Fuel")
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                HStack {
+                                    ForEach(FuelType.allCases) { fuel in
+                                        let isSelected = searchViewModel.selectedFuelTypes.contains(fuel)
+                                        Button {
+                                            if isSelected {
+                                                searchViewModel.selectedFuelTypes.removeAll { object in
+                                                    object == fuel
+                                                }
+                                            } else {
+                                                searchViewModel.selectedFuelTypes.append(fuel)
+                                                homeViewModel.bodyTypes.append("&type[\(homeViewModel.fuelTypes.count)]=\(selectedFuel.rawValue)")
+                                                
+                                            }
+                                        } label: {
+                                            Text(fuel.id)
+                                                .font(.system(size: 15, weight: .regular, design: .rounded))
+                                                .foregroundColor(isSelected ? .white : .black)
+                                                .padding(5)
+                                        }
+                                        
+                                        .background(isSelected ? Color("Green") : .white)
+                                        .cornerRadius(10)
+                                    }
+                                }
+                                .padding(.horizontal)
+                            }
+                            .frame(height: 70)
+                            .background(.white)
+                            .cornerRadius(25)
+                            .padding([.horizontal, .bottom], 15)
+                        }
+                        //MARK: - Variant Fuel
+                        //                ScrollView(.horizontal, showsIndicators: false) {
+                        //                    Picker("Fuel", selection: $selectedFuel) {
+                        //                        ForEach(FuelType.allCases) { fuel in
+                        //                            Text(fuel.id).tag(fuel)
+                        //                        }
+                        //                    }
+                        //                    .pickerStyle(.segmented)
+                        //                }
+                        //                .padding([.horizontal, .bottom], 15)
+                        
+                        
+                        //MARK: - Color
+                        Title(title: "Color")
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            LazyHGrid(rows: colorRows, alignment: .center, spacing: 15) {
+                                ForEach(InteriorColor.allCases) { color in
+                                    let isSelected = searchViewModel.selectedColors.contains(color)
+                                    Button {
+                                        if isSelected {
+                                            searchViewModel.selectedColors.removeAll { object in
+                                                object == color
+                                            }
+                                        } else {
+                                            searchViewModel.selectedColors.append(color)
+                                            homeViewModel.bodyTypes.append("&colors[\(homeViewModel.colors.count)]=\(color.rawValue)")
+                                        }
+                                    } label: {
+                                        VStack(spacing: 5) {
+                                            color.color
+                                                .frame(width: 25, height: 25)
+                                                .clipShape(Circle())
+                                            
+                                            Text(color.id)
+                                                .font(.system(size: 15, weight: .regular, design: .rounded))
+                                                .foregroundColor(isSelected ? .white : .black)
+                                        }
+                                        .frame(width: 75, height: 75)
+                                        .background(isSelected ? Color("Green") : .white)
+                                        .cornerRadius(10)
+                                    }
+                                }
+                            }
+                            .padding(.horizontal)
+                        }
+                        .frame(height: 175)
+                        .background(.white)
+                        .cornerRadius(25)
+                        .padding(.horizontal, 15)
+                        
                     }
-                    .frame(height: 175)
-                    .background(.white)
-                    .cornerRadius(25)
-                    .padding(.horizontal, 15)
-                    
                 }
-            }
                 
                 //MARK: - Search Button
                 Button {
+                    homeViewModel.bodyTypes.append("&gearbox[\(homeViewModel.gearbox.count)]=\(selectedTransmission.rawValue)")
+                    
+                    let params = homeViewModel.gearbox.joined(separator:"") + homeViewModel.fuelTypes.joined(separator:"") + homeViewModel.bodyTypes.joined(separator:"") + homeViewModel.colors.joined(separator:"") + homeViewModel.manufacturer
+                    
+                    homeViewModel.autoRiaSearchRequest(parameters: params)
+                    
+                    isPresented.toggle()
                     
                 } label : {
-                    Text("Search")
-                        .font(.system(size: 18, weight: .semibold, design: .rounded))
-                        .foregroundColor(.white)
+                    HStack {
+                        Text("Search")
+                            .font(.system(size: 18, weight: .semibold, design: .rounded))
+                            .foregroundColor(.white)
+                    }
+                    .padding(.horizontal, 60)
+                    .padding(10)
                 }
-                .padding(.horizontal, 60)
-                .padding(10)
                 .background(Color("Green"))
                 .cornerRadius(25)
             }
@@ -286,6 +302,15 @@ struct SearchView: View {
             Color("HomeBG")
                 .ignoresSafeArea(.all)
         )
+        .onAppear {
+            homeViewModel.gearbox.removeAll()
+            homeViewModel.fuelTypes.removeAll()
+            homeViewModel.bodyTypes.removeAll()
+            homeViewModel.colors.removeAll()
+        }
+        .fullScreenCover(isPresented: $isPresented, content: {
+            SearchCarsView(savedSearch: SavedSearch(year: "to 2021", manufacturer: manufacturer, model: "Vectra C", country: "Poland", color: "White"))
+        })
     }
     
     @ViewBuilder
