@@ -6,13 +6,15 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 @main
-struct AutoMasterApp: App {
+struct AutoMasterApp: SwiftUI.App {
     
     var body: some Scene {
         WindowGroup {
             MainPage()
+                .environment(\.realmConfiguration, Realm.Configuration())
         }
     }
 }
