@@ -7,10 +7,13 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
+import RealmSwift
 
 struct LikedView: View {
     @ObservedObject var viewModel = FavoritesViewModel()
     @EnvironmentObject var sharedData: SharedDataModel
+    
+    @ObservedResults(TransportDetailsShort.self) var transportFetch
     
     @State var showDeleteOption: Bool = false
     
@@ -34,7 +37,7 @@ struct LikedView: View {
                         .padding(10)
                         .background(.white, in: Circle())
                 }
-                .opacity(sharedData.likedTransports.isEmpty ? 0 : 1)
+                .opacity(sharedData.transportFetched.isEmpty ? 0 : 1)
             }
             .padding(.horizontal, 15)
             .padding(.bottom, 10)
@@ -42,7 +45,7 @@ struct LikedView: View {
             
             ScrollView(.vertical, showsIndicators: false) {
                 VStack {
-                    if sharedData.likedTransports.isEmpty {
+                    if transportFetch.isEmpty {
                         Group {
                             Image("noLiked")
                                 .resizable()
@@ -64,11 +67,11 @@ struct LikedView: View {
                     } else {
                         //MARK: - Displaying transports
                         VStack(spacing: 15) {
-                            ForEach(sharedData.likedTransports) { transport in
+                            ForEach(transportFetch) { transport in
                                 HStack(spacing: 0) {
                                     if showDeleteOption {
                                         Button {
-                                            sharedData.deleteFavorite(transport)
+                                            sharedData.deleteFavorite($transportFetch, transport)
                                         } label: {
                                             Image(systemName: "minus.circle.fill")
                                                 .font(.title2)
@@ -89,6 +92,7 @@ struct LikedView: View {
                 
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .animation(.easeInOut, value: transportFetch)
             .background(
                 Color("HomeBG")
                     .ignoresSafeArea()
@@ -97,10 +101,10 @@ struct LikedView: View {
     }
     
     @ViewBuilder
-    func CardView(transport: TransportModel) -> some View {
+    func CardView(transport: TransportDetailsShort) -> some View {
         HStack(spacing: 7) {
             //MARK: - right side(image)
-            WebImage(url: URL(string: transport.image!))
+            WebImage(url: URL(string: transport.imageURL))
                 .resizable()
                 .placeholder(Image(systemName: "photo"))
                 .placeholder {
@@ -117,31 +121,31 @@ struct LikedView: View {
             VStack {
                 HStack {
                     VStack(alignment: .leading) {
-                        Text(String(transport.year ?? 0))
+                        Text(String(transport.year))
                             .font(.system(size: 15, weight: .regular, design: .rounded))
                             .foregroundColor(.gray)
-                        Text(transport.maker ?? " ")
+                        Text(transport.maker)
                             .font(.system(size: 20, weight: .semibold, design: .rounded))
                             .padding(.bottom, 5)
                     }
                     Spacer()
                     Button {
-                        sharedData.deleteFavorite(transport)
+                        sharedData.deleteFavorite($transportFetch, transport)
                     } label: {
                         Image(systemName: "suit.heart.fill")
                             .foregroundColor(.white)
                             .frame(width: 25, height: 25)
                             .padding(5)
-                            .background(sharedData.isLiked(transport) ? .red : Color("Green"), in: Circle())
+                            .background(.red, in: Circle())
                             .offset(y: -10)
                     }
                 }
                 
                 HStack(spacing: 5) {
                     Group {
-                        Text(String(transport.price  ?? 0) + " $")
-                        Text(transport.mileage ?? " ")
-                        Text(transport.location ?? " ")
+                        Text(String(transport.price) + " $")
+                        Text(transport.mileage)
+                        Text(transport.location)
                     }
                     .font(.system(size: 15, weight: .regular, design: .rounded))
                     .lineLimit(1)
@@ -164,19 +168,19 @@ struct LikedView: View {
 struct FavoritesView_Previews: PreviewProvider {
     static var previews: some View {
         LikedView()
-           .environmentObject(SharedDataModel())
-           .previewDevice(PreviewDevice(rawValue: "iPhone 8"))
+            .environmentObject(SharedDataModel())
+            .previewDevice(PreviewDevice(rawValue: "iPhone 8"))
         
         LikedView()
-           .environmentObject(SharedDataModel())
+            .environmentObject(SharedDataModel())
             .previewDevice(PreviewDevice(rawValue: "iPhone 11"))
         
         LikedView()
-           .environmentObject(SharedDataModel())
+            .environmentObject(SharedDataModel())
             .previewDevice(PreviewDevice(rawValue: "iPhone 12"))
         
         LikedView()
-           .environmentObject(SharedDataModel())
+            .environmentObject(SharedDataModel())
             .previewDevice(PreviewDevice(rawValue: "iPhone 12 Pro Max"))
     }
 }

@@ -8,7 +8,7 @@
 import UIKit
 
 //MARK: - TransportModel
-struct TransportModel: Decodable, Identifiable, Hashable {
+class TransportModel: Decodable, Identifiable {
     
     //TODO: - separate common, and for each api
     
@@ -102,7 +102,7 @@ struct TransportModel: Decodable, Identifiable, Hashable {
         case seoLinkF
     }
     
-    init(from decoder: Decoder) throws {
+    required init(from decoder: Decoder) throws {
         
         guard let key = CodingUserInfoKey(rawValue: "site"),
               let value = decoder.userInfo[key],

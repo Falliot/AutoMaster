@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 class SharedDataModel: ObservableObject {
     @Published var detailTransport: TransportModel?
@@ -13,7 +14,9 @@ class SharedDataModel: ObservableObject {
     
     var opelIcons = ["opelImg", "opelImg1", "opelImg2", "opelImg3", "opelImg4", "opelImg5"]
     
-    @Published var likedTransports: [TransportModel] = []
+    @ObservedResults(TransportDetailsShort.self) var transportFetched
+    @Published var transportCopy: TransportDetailsShort = TransportDetailsShort()
+    
     @Published var likedSearches: [SavedSearch] = []
     @Published var carIds: [Int] = []
     
@@ -26,31 +29,41 @@ class SharedDataModel: ObservableObject {
     }
     
     // TODO: FIX TO GENERICS for both liked transports and search
-    
-    
-    func isLiked(_ currentTransport: TransportModel) -> Bool {
-        return likedTransports.contains { transport in
-            return currentTransport.id == transport.id
-        }
+        
+    func isLiked(_ object: Results<TransportDetailsShort>, _ currentTransport: TransportModel) -> Bool {
+        object.contains(where: { transport in
+            currentTransport.id == transport.transportId
+        })
     }
     
-    func addToLiked(_ currentTransport: TransportModel) {
-        if let index =  likedTransports.firstIndex(where: { transport in
-            return currentTransport.id == transport.id
+    func addToLiked(_ object: Results<TransportDetailsShort>, _ observableObject: ObservedResults<TransportDetailsShort>, _ currentTransport: TransportModel) {
+        
+        if object.contains(where: { transport in
+            self.transportCopy = transport
+            return currentTransport.id == transport.transportId
         }) {
-             likedTransports.remove(at: index)
+            observableObject.remove(self.transportCopy)
         } else {
-             likedTransports.append(currentTransport)
-        }
-    }
-    
-    func deleteFavorite(_ currentTransport: TransportModel) {
-        if let index = likedTransports.firstIndex(where: { selectedTransport in
-            return currentTransport.id == selectedTransport.id
-        }) {
-            let _ = withAnimation {
-                likedTransports.remove(at: index)
+            if !object.contains(where: { trans in
+                currentTransport.id == trans.transportId
+            }) {
+                observableObject.append(TransportDetailsShort(
+                    value:
+                        [
+                            "transportId" : currentTransport.id!,
+                            "imageURL" : currentTransport.image!,
+                            "year" : String(currentTransport.year!),
+                            "maker" : currentTransport.maker!,
+                            "price" : String(currentTransport.price!),
+                            "mileage" : currentTransport.mileage!,
+                            "location" : currentTransport.location!,
+                        ])
+                )
             }
         }
+    }
+    
+    func deleteFavorite(_ observableObject: ObservedResults<TransportDetailsShort>, _ currentTransport: TransportDetailsShort) {
+        observableObject.remove(currentTransport)
     }
 }

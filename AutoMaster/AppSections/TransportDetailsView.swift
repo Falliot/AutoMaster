@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
+import RealmSwift
 
 struct TransportDetailsView: View {
     var animation: Namespace.ID
@@ -14,6 +15,8 @@ struct TransportDetailsView: View {
     
     @StateObject var viewModel: TransportViewModel = TransportViewModel()
     @EnvironmentObject var sharedData: SharedDataModel
+    
+    @ObservedResults(TransportDetailsShort.self) var transportFetch
     
     @State private var showingPopover = false
     @State var popOver: PopOver = .none
@@ -102,13 +105,14 @@ struct TransportDetailsView: View {
                                 Spacer()
                                 //MARK: - change from gray to red, into animation
                                 Button {
-                                    sharedData.addToLiked(transport)
+                                    sharedData.addToLiked(transportFetch, $transportFetch, transport)
+                                    
                                 } label: {
                                     Image(systemName: "suit.heart.fill")
                                         .font(.title)
                                         .foregroundColor(.white)
                                         .padding(10)
-                                        .background(sharedData.isLiked(transport) ? .red : Color("Green"), in: Circle())
+                                        .background(sharedData.isLiked(transportFetch, transport) ? .red : Color("Green"), in: Circle())
                                         .offset(y: -25)
                                 }
                             }
@@ -171,7 +175,7 @@ struct TransportDetailsView: View {
                 PopOverInfo(popOverType: popOver)
             }
             .navigationBarHidden(true)
-            .animation(.easeInOut, value: sharedData.likedTransports)
+            .animation(.easeInOut, value: transportFetch)
             .background(
                 Color("HomeBG")
                     .ignoresSafeArea(edges: .top)
