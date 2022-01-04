@@ -309,7 +309,7 @@ struct SearchView: View {
             homeViewModel.colors.removeAll()
         }
         .fullScreenCover(isPresented: $isPresented, content: {
-            SearchCarsView(savedSearch: SavedSearch(year: "to 2021", manufacturer: manufacturer, model: "Vectra C", country: "Poland", color: "White"))
+            SearchCarsView(year: "2001", manufacturer: homeViewModel.manufacturer, model: "Vectra C", color: "yellow")
         })
     }
     

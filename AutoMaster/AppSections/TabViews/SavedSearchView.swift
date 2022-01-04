@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 struct SavedSearchView: View {
     @EnvironmentObject var sharedData: SharedDataModel
+    @ObservedResults(SavedSearch.self) var likedSearches
     
     @State var showDeleteOption: Bool = false
     @State private var notification = false
@@ -31,7 +33,7 @@ struct SavedSearchView: View {
                         .font(.system(size: 17, weight: .semibold, design: .rounded))
                         .foregroundColor(.white)
                 }
-                .opacity(sharedData.likedSearches.isEmpty ? 0 : 1)
+                .opacity(likedSearches.isEmpty ? 0 : 1)
             }
             .padding(10)
             .padding(.horizontal, 15)
@@ -40,7 +42,7 @@ struct SavedSearchView: View {
             
             ScrollView(.vertical, showsIndicators: false) {
                 VStack {
-                    if sharedData.likedSearches.isEmpty {
+                    if likedSearches.isEmpty {
                         Group {
                             Image("noSavedSearch")
                                 .resizable()
@@ -62,11 +64,11 @@ struct SavedSearchView: View {
                     } else {
                         //MARK: - Displaying searches
                         VStack(spacing: 15) {
-                            ForEach(sharedData.likedSearches) { search in
+                            ForEach(likedSearches) { search in
                                 HStack(spacing: 0) {
                                     if showDeleteOption {
                                         Button {
-                                            //                                        sharedData.deleteFavorite(transport)
+                                            sharedData.deleteFavoriteSearch($likedSearches, search)
                                         } label: {
                                             Image(systemName: "minus.circle.fill")
                                                 .font(.title2)

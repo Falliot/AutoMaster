@@ -7,15 +7,20 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
+import RealmSwift
 
 struct SearchCarsView: View {
     @Environment(\.presentationMode) var presentationMode
     @Namespace var animation
-    
     @EnvironmentObject var homeViewModel: HomeViewModel
     @EnvironmentObject var sharedData: SharedDataModel
     
-    var savedSearch: SavedSearch
+    @ObservedResults(SavedSearch.self) var likedSearches
+    
+    var year: String
+    var manufacturer: String
+    var model: String
+    var color: String
     
     @State var isTapped: Bool = false
     
@@ -43,7 +48,7 @@ struct SearchCarsView: View {
                 
                 Button {
                     isTapped.toggle()
-                    sharedData.likedSearches.append(savedSearch)
+                    sharedData.addToLikedSearch(likedSearches, $likedSearches, year: year, manufacturer: manufacturer, model: model, color: color)
                 } label:  {
                     Image(systemName: isTapped ? "heart.fill" : "heart")
                         .font(.title2)
@@ -168,11 +173,5 @@ struct SearchCarsView: View {
                 .lineLimit(1)
                 .minimumScaleFactor(0.9)
         }
-    }
-}
-
-struct SearchCarsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchCarsView(savedSearch: SavedSearch(year: "2001", manufacturer: "Opel", model: "Vectra C", country: "Poland", color: "Black"))
     }
 }

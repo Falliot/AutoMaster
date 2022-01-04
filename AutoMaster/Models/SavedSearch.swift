@@ -5,13 +5,15 @@
 //  Created by Anton Pustovidko on 02/01/2022.
 //
 
-import Foundation
+import SwiftUI
+import RealmSwift
+import SwiftUIX
 
-struct SavedSearch: Identifiable {
-    var id: String = UUID().uuidString
-    var year: String
-    var manufacturer: String
-    var model: String
-    var country: String
-    var color: String
+class SavedSearch: Object, Identifiable {
+    @Persisted(primaryKey: true) var id: ObjectId
+    @Persisted var year: String
+    @Persisted var manufacturer: String
+    @Persisted var model: String
+    @Persisted var country: String
+    @Persisted var color: String
 }

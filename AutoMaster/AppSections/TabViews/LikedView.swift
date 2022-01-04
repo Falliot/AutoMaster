@@ -37,7 +37,7 @@ struct LikedView: View {
                         .padding(10)
                         .background(.white, in: Circle())
                 }
-                .opacity(sharedData.transportFetched.isEmpty ? 0 : 1)
+                .opacity(transportFetch.isEmpty ? 0 : 1)
             }
             .padding(.horizontal, 15)
             .padding(.bottom, 10)
@@ -71,7 +71,7 @@ struct LikedView: View {
                                 HStack(spacing: 0) {
                                     if showDeleteOption {
                                         Button {
-                                            sharedData.deleteFavorite($transportFetch, transport)
+                                            sharedData.deleteFavoriteTransport($transportFetch, transport)
                                         } label: {
                                             Image(systemName: "minus.circle.fill")
                                                 .font(.title2)
@@ -130,7 +130,7 @@ struct LikedView: View {
                     }
                     Spacer()
                     Button {
-                        sharedData.deleteFavorite($transportFetch, transport)
+                        sharedData.deleteFavoriteTransport($transportFetch, transport)
                     } label: {
                         Image(systemName: "suit.heart.fill")
                             .foregroundColor(.white)
