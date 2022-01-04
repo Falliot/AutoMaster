@@ -160,7 +160,6 @@
 			children = (
 				099E8E6F27579A2D006F41F1 /* Extensions */,
 				3A1ABD8B273814AA00554C4A /* Constants */,
-				3A82E88F2745881300BCB859 /* Data */,
 				3A82E8922745883300BCB859 /* Enums */,
 				3A82E8942745889700BCB859 /* Managers */,
 			);
@@ -229,13 +228,6 @@
 				09D3C3F0278380DE00EA8C75 /* TransportDetailsShort.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		3A82E88F2745881300BCB859 /* Data */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Data;
 			sourceTree = "<group>";
 		};
 		3A82E8922745883300BCB859 /* Enums */ = {

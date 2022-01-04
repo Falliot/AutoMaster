@@ -170,7 +170,7 @@ struct SearchView: View {
                         //MARK: - Sliders
                         Group {
                             TitleWithSlider(title: "Price ($)", slider: priceSlider)
-                            TitleWithSlider(title: "Year", slider: yearSlider)
+                            TitleWithSlider(title: "Year", slider: yearSlider, withComma: false)
                             TitleWithSlider(title: "KM", slider: milleageSlider)
                         }
                         
@@ -323,7 +323,7 @@ struct SearchView: View {
     }
     
     @ViewBuilder
-    func TitleWithSlider(title: String, slider: CustomSlider) -> some View {
+    func TitleWithSlider(title: String, slider: CustomSlider, withComma: Bool = true) -> some View {
         Text(title)
             .font(.system(size: 16, weight: .semibold, design: .rounded))
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -332,9 +332,15 @@ struct SearchView: View {
         
         VStack {
             HStack(alignment: .center) {
-                Text("\(slider.lowHandle.currentValue)")
-                Text(" to ")
-                Text("\(slider.highHandle.currentValue)")
+                if withComma {
+                    Text("\(slider.lowHandle.currentValue)")
+                    Text(" to ")
+                    Text("\(slider.highHandle.currentValue)")
+                } else {
+                    Text(String(slider.lowHandle.currentValue))
+                    Text(" to ")
+                    Text(String(slider.highHandle.currentValue))
+                }
             }
             .padding(.bottom, 10)
             
