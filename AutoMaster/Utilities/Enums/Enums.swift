@@ -28,14 +28,51 @@ enum AutoCondition {
 }
 
 enum Transmission: String, CaseIterable, Identifiable {
-    case manual, automatic, semi_Automatic
-    var id: String { self.rawValue.capitalized }
+    case manual = "1"
+    case automatic  = "2"
+    case semi_Automatic = "3"
+    var id: String {
+        switch self {
+        case .manual:
+            return "Manual"
+        case .automatic:
+            return "Automatic"
+        case .semi_Automatic:
+            return "Semi-automatic"
+        }
+    }
     
 }
 
 enum FuelType: String, CaseIterable, Identifiable {
-    case gasoline, electric, diesel, electricGasoline, electricDiesel, cng, ethanol, hydroge, lpg, others
-    var id: String { self.rawValue.capitalized }
+    case gasoline = "1"
+    case diesel = "2"
+    case gas = "3"
+    case hybrid = "5"
+    case electric = "6"
+    case other = "7"
+    case electricGasoline
+    case electricDiesel
+    var id: String {
+        switch self {
+        case .gasoline:
+            return "Gasoline"
+        case .diesel:
+            return "Diesel"
+        case .gas:
+            return "Gas"
+        case .hybrid:
+            return "Hybrid"
+        case .electric:
+            return "Electric"
+        case .other:
+            return "Other"
+        case .electricGasoline:
+            return "Electric-gasoline"
+        case .electricDiesel:
+            return "Electroc-diesel"
+        }
+    }
 }
 
 enum Equipment {
@@ -73,8 +110,53 @@ enum ColorAndUpholstery {
     }
 }
 enum InteriorColor: String, CaseIterable, Identifiable {
-    case any, black, blue, brown, gold, green, gray, orange, purple, pink, red, violet, white, yellow
-    var id: String { self.rawValue.capitalized }
+    case any
+    case black = "2"
+    case blue = "3"
+    case brown = "5"
+    case gold = "6"
+    case green = "7"
+    case gray = "8"
+    case orange = "9"
+    case purple = "12"
+    case pink = "11"
+    case red = "13"
+    case violet = "10"
+    case white = "15"
+    case yellow = "16"
+    
+    var id: String {
+        switch self {
+        case .any:
+            return "Any"
+        case .black:
+            return "Black"
+        case .blue:
+            return "Blue"
+        case .brown:
+            return "Brown"
+        case .gold:
+            return "Gold"
+        case .green:
+            return "Green"
+        case .gray:
+            return "Gray"
+        case .orange:
+            return "Orange"
+        case .purple:
+            return "Purple"
+        case .pink:
+            return "Pink"
+        case .red:
+            return "Red"
+        case .violet:
+            return "Violet"
+        case .white:
+            return "White"
+        case .yellow:
+            return "Yellow"
+        }
+    }
     var color: Color {
         switch self {
         case .any:

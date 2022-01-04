@@ -52,10 +52,7 @@ struct MenuView: View {
                     }
                     
                     CustomNavigationLink(title: "Notifications") {
-                        Text("")
-                            .navigationTitle("Notifications")
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            .background(Color("HomeBG").ignoresSafeArea())
+                        NotificationView()
                     }
                     
                     CustomNavigationLink(title: "Feedback") {

@@ -27,6 +27,7 @@ struct MainPage: View {
                     .tag(Tab.home)
 
                 SavedSearchView()
+                    .environmentObject(sharedData)
                     .tag(Tab.search)
 
                 LikedView()
@@ -65,7 +66,7 @@ struct MainPage: View {
                 .padding(.bottom, 10)
             }
         }
-//        .background(Color("HomeBG").ignoresSafeArea())
+        .background(Color("HomeBG").ignoresSafeArea())
         .overlay(
             ZStack{
                 if let transport = sharedData.detailTransport, sharedData.showDetailTransport {
